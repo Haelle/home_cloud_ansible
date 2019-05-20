@@ -1,0 +1,33 @@
+---
+- name: Install NFS support
+  apt:
+    name:
+      - nfs-common
+      - nfs-server
+
+# TODO: change it when RAID 1
+- name: Add disk to NFS conf
+  lineinfile:
+    path: /etc/exports
+    regexp: "{{ mount_point }}/ {{ nfs_allowed_ips }}(.+)"
+    line: "{{ mount_point }}/ {{ nfs_allowed_ips }}(rw,sync,subtree_check)"
+    state: present
+
+- name: Reload exports file
+  shell: exportfs -ra
+
+- name: enable RPC
+  shell: update-rc.d rpcbind enable
+
+- name:  enable NFS
+  shell: update-rc.d nfs-common enable
+
+- name: restart RPC
+  service:
+    name: rpcbind
+    state: restarted
+
+- name: restart NFS
+  service:
+    name: nfs-kernel-server
+    state: restarted

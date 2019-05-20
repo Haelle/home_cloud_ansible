@@ -1,0 +1,6 @@
+---
+- name: Install mandatory packages
+  apt:
+    name:
+      - powerline
+      - fonts-powerline

@@ -1,0 +1,28 @@
+---
+- name: Copy Nginx conf Transmission
+  template:
+    src: transmission.conf.j2
+    dest: /etc/nginx/sites-available/transmission.conf
+    mode: 0644
+  notify: reload nginx
+
+- name: symlink to site enabled Transmission
+  file:
+    src: /etc/nginx/sites-available/transmission.conf
+    path: /etc/nginx/sites-enabled/transmission.conf
+    state: link
+  notify: reload nginx
+
+- name: Copy Nginx conf Plex
+  copy:
+    src: plex.conf.j2
+    dest: /etc/nginx/sites-available/plex.conf
+    mode: 0644
+  notify: reload nginx
+
+- name: symlink to site enabled Plex
+  file:
+    src: /etc/nginx/sites-available/plex.conf
+    path: /etc/nginx/sites-enabled/plex.conf
+    state: link
+  notify: reload nginx

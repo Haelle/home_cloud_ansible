@@ -1,0 +1,50 @@
+---
+- name: Auto start SSH
+  service:
+    name: ssh
+    enabled: yes
+
+- name: Disable GUI at boot time
+  command: raspi-config nonint do_boot_behaviour B1
+  become: true
+
+- name: Nginx confs
+  include: nginx.yml
+  tags: cloud-nginx
+
+- name: Plex register directory state (is link ?)
+  stat:
+    path: "/var/lib/plexmediaserver/Library/Application Support/Plex Media Server/"
+  register: plex_link
+  tags: plex
+
+- name: Plex conf (when path exists and is not a symlink)
+  include: plex.yml
+  when: plex_link.stat.islnk is defined and plex_link.stat.islnk == False
+  tags: plex
+
+- name: Install packages
+  apt:
+    name:
+      - ntfs-3g
+
+- name: NFS config (network disk)
+  include: nfs.yml
+  tags: nfs
+
+- name: Open ports in UFW
+  include: ufw.yml
+  tags:
+    - ufw
+    - nfw
+    - transmission
+    - plex
+
+- name: TEMP auto mount data disk
+  mount:
+    path: "{{ mount_point }}"
+    src: UUID={{ disk_uuid }}
+    fstype: ntfs-3g
+    opts: defaults,umask=002,uid=1001,gid=1001
+    state: present
+

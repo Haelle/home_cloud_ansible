@@ -1,0 +1,53 @@
+---
+- hosts: raspberry
+  remote_user: pi
+  become: true
+  vars:
+    server_ip: "{{ ansible_default_ipv4.address }}"
+    mount_point: /media/data
+    # get uuid with `blkid`
+    disk_uuid: 727A8D4E18B6D217
+    # not sure what is needed here
+    nfs_allowed_ips: 10.100.102.0/24
+  vars_files:
+    - ./secrets.yml
+
+  roles:
+    - role: packages
+
+    - role: singleplatform-eng.users
+      users:
+        - username: pi
+          name: pi
+          groups: ['sudo']
+          password: "{{ pi_password }}"
+          ssh_key:
+            - "{{ pi_ssh_key }}"
+
+    - role: viasite-ansible.zsh
+      zsh_user: pi
+
+    - role: elboletaire.transmission
+      transmission_user: pi
+      transmission_password: "{{ tranmission_password }}"
+      transmission_rpc_auth_required: true
+      transmission_download_dir: "{{ mount_point }}/downloads"
+      transmission_incomplete_dir: "{{ mount_point }}/.incomplete"
+      transmission_watch_dir: "{{ mount_point }}/torrents"
+      transmission_rpc_whitelist_enabled: false
+      tags: transmission
+
+    - role: plex
+
+    - role: aalaesar.install_nextcloud
+      nextcloud_trusted_domain: cloud.alxs.fr
+      nextcloud_websrv: nginx
+      nextcloud_data_dir: "{{ mount_point }}/nextcloud"
+      nextcloud_admin_pwd: "{{ nextcloud_admin_password }}"
+      nextcloud_db_backend: pgsql
+      nextcloud_db_pwd: "{{ nextcloud_db_password }}"
+      tags: nextcloud
+
+    - role: media-server
+      plex_server_name: plex.alxs.fr
+      transmission_server_name: transmission.alxs.fr

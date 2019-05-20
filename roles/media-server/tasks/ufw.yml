@@ -1,0 +1,24 @@
+---
+- name: Allow NFS in UFW (only work if nfs in /etc/services)
+  ufw:
+    rule: allow
+    name: nfs
+  tags: nfw
+
+- name: Allow Transmission in UFW
+  ufw:
+    rule: allow
+    port: 9091
+  tags: transmission
+
+- name: Allow Plex in UFW
+  ufw:
+    rule: allow
+    port: 32400
+  tags: plex
+
+- name: Allow Transmission in UFW
+  ufw:
+    rule: allow
+    port: 51413
+  tags: transmission
