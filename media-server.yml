@@ -7,7 +7,7 @@
     mount_point: /media/data
     # get uuid with `blkid`
     disk_uuid: 727A8D4E18B6D217
-    # not sure what is needed here
+    # not sure what IP is needed here
     nfs_allowed_ips: 10.100.102.0/24
   vars_files:
     - ./secrets.yml

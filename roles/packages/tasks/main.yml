@@ -2,5 +2,8 @@
 - name: Install mandatory packages
   apt:
     name:
+      - vim
+      - software-properties-common
+      - build-essential
       - powerline
       - fonts-powerline

@@ -18,3 +18,17 @@ Reference this file in `media-server.yml` instead of `./secrets.yml`
 ansible-galaxy install -r requirements.yml
 ansible-playbook media-server.yml
 ```
+
+# TODO:
+NFS disk
+when RAID 1 change NFS conf
+Plex :
+to add
+sudo chown -h -R plex:plex Plex\ Media\ Server
+sudo chown -h -R plex:plex path_to_real_dir
+forget ntfs... need ext4 for Plex & nfs !!!
+
+----------------
+To do by hand
+enable UFW ansible fails to enable on strech ?!
+$ sudo ufw enable
