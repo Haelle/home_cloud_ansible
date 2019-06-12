@@ -17,23 +17,18 @@
     name:
       - ntfs-3g
 
-- name: NFS config (network disk)
-  include: nfs.yml
-  tags: nfs
+#- name: NFS config (network disk)
+#  include: nfs.yml
+#  tags: nfs
 
 - name: Open ports in UFW
   include: ufw.yml
-  tags:
-    - ufw
-    - nfw
-    - transmission
-    - plex
 
-- name: TEMP auto mount data disk
-  mount:
-    path: "{{ mount_point }}"
-    src: UUID={{ disk_uuid }}
-    fstype: ntfs-3g
-    opts: defaults,umask=002,uid=1001,gid=1001
-    state: present
-
+# TODO: fix this
+#- name: TEMP auto mount data disk
+#  mount:
+#    path: "{{ mount_point }}"
+#    src: UUID={{ disk_uuid }}
+#    fstype: ntfs-3g
+#    opts: defaults,umask=002,uid=1001,gid=1001
+#    state: present
