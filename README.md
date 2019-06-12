@@ -17,6 +17,19 @@ Reference this file in `media-server.yml` instead of `./secrets.yml`
 ```bash
 ansible-galaxy install -r requirements.yml
 ansible-playbook media-server.yml
+ansible -m setup <hostname>
+```
+
+# RAID 1 (with mdadm)
+
+You may need to manually umount the disk as many systems auto mount disks. The mount point varies depending on the system, on my Raspberry it was `/media/pi/<disk_name>` :
+```bash
+sudo umount <disk mount point>
+```
+
+Check RAID status:
+```bash
+mdadm -D /mnt/md0
 ```
 
 # TODO:

@@ -1,19 +1,18 @@
 ---
 - hosts: raspberry
-  remote_user: pi
+  remote_user: pi # default password is 'raspberry'
   become: true
   vars:
     server_ip: "{{ ansible_default_ipv4.address }}"
     mount_point: /media/data
-    # get uuid with `blkid`
-    disk_uuid: 727A8D4E18B6D217
     # not sure what IP is needed here
-    nfs_allowed_ips: 10.100.102.0/24
+    nfs_allowed_ips: 192.168.1.0/24
   vars_files:
     - ./secrets.yml
 
   roles:
     - role: packages
+      tags: base
 
     - role: singleplatform-eng.users
       users:
@@ -23,9 +22,25 @@
           password: "{{ pi_password }}"
           ssh_key:
             - "{{ pi_ssh_key }}"
+      tags: users
 
     - role: viasite-ansible.zsh
       zsh_user: pi
+      tags: zsh
+
+    - role: mrlesmithjr.mdadm
+      mdadm_arrays:
+        - name: 'md0'
+          devices:
+            - '/dev/sda'
+            - '/dev/sdb'
+          filesystem: 'ext4'
+          filesystem_opts: ''
+          level: '1'
+          mountpoint: "{{ mount_point }}"
+          state: 'present'
+          opts: 'noatime'
+      tags: mdadm
 
     - role: elboletaire.transmission
       transmission_user: pi
@@ -38,6 +53,7 @@
       tags: transmission
 
     - role: plex
+      tags: plex
 
     - role: aalaesar.install_nextcloud
       nextcloud_trusted_domain: cloud.alxs.fr
