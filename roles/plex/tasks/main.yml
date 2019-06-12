@@ -4,3 +4,12 @@
 
 - name: Install csfd-plex (metadata agent)
   include_tasks: csfd.yml
+
+- name: Plex register directory state (is link?)
+  stat:
+    path: "/var/lib/plexmediaserver/Library/Application Support/Plex Media Server/"
+  register: plex_link
+
+- name: Plex conf (when path exists and is not a symlink)
+  include: plex_data.yml
+  when: plex_link.stat.islnk is defined and plex_link.stat.islnk == False

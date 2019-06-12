@@ -12,17 +12,6 @@
   include: nginx.yml
   tags: cloud-nginx
 
-- name: Plex register directory state (is link ?)
-  stat:
-    path: "/var/lib/plexmediaserver/Library/Application Support/Plex Media Server/"
-  register: plex_link
-  tags: plex
-
-- name: Plex conf (when path exists and is not a symlink)
-  include: plex.yml
-  when: plex_link.stat.islnk is defined and plex_link.stat.islnk == False
-  tags: plex
-
 - name: Install packages
   apt:
     name:

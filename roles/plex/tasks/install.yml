@@ -25,16 +25,4 @@
     name: plexmediaserver-installer
     default_release: "{{ ansible_distribution_release }}"
     state: latest
-  register: plexmediaserver_installed
-
-  #- name: Use 'pi' user instead of 'plex'
-  #  lineinfile:
-  #    path: /etc/default/plexmediaserver.prev
-  #    regexp: '^PLEX_MEDIA_SERVER_USER='
-  #    line: 'PLEX_MEDIA_SERVER_USER=pi'
-
-- name: Restart plexmediaserver
-  service:
-    name: plexmediaserver
-    state: restarted
-  when: plexmediaserver_installed.changed
+  notify: restart plex
