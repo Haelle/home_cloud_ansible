@@ -28,27 +28,32 @@
     - { port: '21', proto: 'tcp' }
     - { port: '80', proto: 'tcp' }
     - { port: '443', proto: 'tcp' }
+  ignore_errors: true
 
 - name: Allow NFS in UFW (only work if nfs in /etc/services)
   ufw:
     rule: allow
     name: nfs
-  tags: nfw
+  tags: nfs
+  ignore_errors: true
 
 - name: Allow Transmission in UFW
   ufw:
     rule: allow
     port: 9091
+  ignore_errors: true
+  tags: transmission
+
+- name: Allow Transmission in UFW
+  ufw:
+    rule: allow
+    port: 51413
+  ignore_errors: true
   tags: transmission
 
 - name: Allow Plex in UFW
   ufw:
     rule: allow
     port: 32400
+  ignore_errors: true
   tags: plex
-
-- name: Allow Transmission in UFW
-  ufw:
-    rule: allow
-    port: 51413
-  tags: transmission
