@@ -7,7 +7,7 @@
 
 - name: Plex register directory state (is link?)
   stat:
-    path: "/var/lib/plexmediaserver/Library/Application Support/Plex Media Server/"
+    path: "/var/lib/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server"
   register: plex_link
 
 - name: Plex conf (when path exists and is not a symlink)
