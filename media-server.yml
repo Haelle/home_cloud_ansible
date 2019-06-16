@@ -55,8 +55,26 @@
     - role: plex
       tags: plex
 
+    - role: php
+      tags: nextcloud
+
     - role: aalaesar.install_nextcloud
-      nextcloud_trusted_domain: cloud.alxs.fr
+      php_version: "7.3"
+      php_custom: yes
+      php_ver: "{{ php_version }}"
+      php_dir: "/etc/php/{{ php_version }}"
+      php_bin: "php-fpm{{ php_version }}"
+      php_pkg_apcu: "php-apcu"
+      php_pkg_spe:
+        - "php{{ php_version }}-imap"
+        - "php{{ php_version }}-imagick"
+        - "php{{ php_version }}-xml"
+        - "php{{ php_version }}-zip"
+        - "php{{ php_version }}-mbstring"
+        - "php-redis"
+      php_socket: "/var/run/php/php{{ php_version }}-fpm.sock"
+      nextcloud_trusted_domain:
+        - cloud.alxs.fr
       nextcloud_websrv: nginx
       nextcloud_data_dir: "{{ mount_point }}/nextcloud"
       nextcloud_admin_pwd: "{{ nextcloud_admin_password }}"
@@ -67,3 +85,4 @@
     - role: media-server
       plex_server_name: plex.alxs.fr
       transmission_server_name: transmission.alxs.fr
+      tags: server-confs
