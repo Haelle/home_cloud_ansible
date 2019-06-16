@@ -17,7 +17,7 @@ Reference this file in `media-server.yml` instead of `./secrets.yml`
 ```bash
 ansible-galaxy install -r requirements.yml
 ansible-playbook media-server.yml
-ansible -m setup <hostname>
+ansible u- pi -m setup <hostname>
 ```
 
 # RAID 1 (with mdadm)
