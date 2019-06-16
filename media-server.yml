@@ -28,20 +28,6 @@
       zsh_user: pi
       tags: zsh
 
-    - role: mrlesmithjr.mdadm
-      mdadm_arrays:
-        - name: 'md0'
-          devices:
-            - '/dev/sda'
-            - '/dev/sdb'
-          filesystem: 'ext4'
-          filesystem_opts: ''
-          level: '1'
-          mountpoint: "{{ mount_point }}"
-          state: 'present'
-          opts: 'noatime'
-      tags: mdadm
-
     - role: elboletaire.transmission
       transmission_user: pi
       transmission_password: "{{ tranmission_password }}"

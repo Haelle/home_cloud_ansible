@@ -20,18 +20,6 @@ ansible-playbook media-server.yml
 ansible u- pi -m setup <hostname>
 ```
 
-# RAID 1 (with mdadm)
-
-You may need to manually umount the disk as many systems auto mount disks. The mount point varies depending on the system, on my Raspberry it was `/media/pi/<disk_name>` :
-```bash
-sudo umount <disk mount point>
-```
-
-Check RAID status:
-```bash
-mdadm -D /mnt/md0
-```
-
 # Other
 ## Check piplening is enabled
 If in the log there is only ONE `SSH: EXEC ssh....` it's working if not there will be 3-5 occurences (https://stackoverflow.com/questions/43438519/check-if-ansible-pipelining-is-enabled-working) :
