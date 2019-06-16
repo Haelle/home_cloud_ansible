@@ -32,6 +32,13 @@ Check RAID status:
 mdadm -D /mnt/md0
 ```
 
+# Other
+## Check piplening is enabled
+If in the log there is only ONE `SSH: EXEC ssh....` it's working if not there will be 3-5 occurences (https://stackoverflow.com/questions/43438519/check-if-ansible-pipelining-is-enabled-working) :
+```bash
+ansible raspberry -vvv -u pi -m shell -a 'echo ok'
+```
+
 # TODO:
 NFS disk
 when RAID 1 change NFS conf
