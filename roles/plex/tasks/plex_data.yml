@@ -6,6 +6,11 @@
     owner: plex
     group: plex
 
+- name: stop Plex
+  service:
+    name: plexmediaserver
+    state: stopped
+
 - name: copy current config to data partition
   shell: cp -r /var/lib/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server {{ mount_point }}/plex_data
   become: true
