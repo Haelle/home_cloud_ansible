@@ -30,13 +30,6 @@
     - { port: '443', proto: 'tcp' }
   ignore_errors: true
 
-- name: Allow NFS in UFW (only work if nfs in /etc/services)
-  ufw:
-    rule: allow
-    name: nfs
-  tags: nfs
-  ignore_errors: true
-
 - name: Allow Transmission in UFW
   ufw:
     rule: allow

@@ -3,16 +3,14 @@
   remote_user: pi # default password is 'raspberry'
   become: true
   vars:
-    server_ip: "{{ ansible_default_ipv4.address }}"
     mount_point: /media/data
-    # not sure what IP is needed here
-    nfs_allowed_ips: 192.168.1.0/24
+    disk_uuid: f3ebf1cd-ce7f-4633-ac6d-3b5945ff85e4
   vars_files:
     - ./secrets.yml
 
   roles:
-    - role: packages
-      tags: base
+    - role: pre-install
+      tags: pre-install
 
     - role: singleplatform-eng.users
       users:
@@ -68,7 +66,11 @@
       nextcloud_db_pwd: "{{ nextcloud_db_password }}"
       tags: nextcloud
 
-    - role: media-server
+    - role: post-install
       plex_server_name: plex.alxs.fr
       transmission_server_name: transmission.alxs.fr
-      tags: server-confs
+      domains_to_cert:
+        - plex.alxs.fr
+        - transmission.alxs.fr
+        - cloud.alxs.fr
+      tags: post-install

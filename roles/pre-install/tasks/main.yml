@@ -1,0 +1,29 @@
+---
+- name: Auto start SSH
+  service:
+    name: ssh
+    enabled: yes
+
+- name: Disable GUI at boot time
+  command: raspi-config nonint do_boot_behaviour B1
+  become: true
+
+- name: Install mandatory packages
+  apt:
+    name:
+      - vim
+      - software-properties-common
+      - build-essential
+      - powerline
+      - fonts-powerline
+
+# UUID from `blkid`
+- name: auto mount data disk
+  mount:
+    path: "{{ mount_point }}"
+    src: UUID={{ disk_uuid }}
+    fstype: ext4
+    opts: defaults
+    passno: 2
+    state: mounted
+  tags: fstab

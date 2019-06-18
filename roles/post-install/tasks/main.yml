@@ -1,0 +1,10 @@
+---
+- name: Nginx confs
+  include: nginx.yml
+  tags: cloud-nginx
+
+- name: Open ports in UFW
+  include: ufw.yml
+
+- name: Certbot
+  include: certbot.yml

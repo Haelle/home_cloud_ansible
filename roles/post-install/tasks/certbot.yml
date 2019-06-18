@@ -1,0 +1,28 @@
+---
+- name: Add certbot repository to apt-get
+  apt_repository:
+    repo: 'ppa:certbot/certbot'
+    state: present
+    update_cache: yes
+
+- name: Install Certbot
+  apt:
+    name:
+      - certbot
+      - python-certbot-nginx
+
+- name: Check if certificate already exists.
+  stat:
+    path: /etc/letsencrypt/live/{{ item }}/cert.pem
+  register: letsencrypt_cert
+
+- name: "Issue a certificate for each domains: {{ item }}"
+  shell: "certbot certonly --nginx -d {{ item }} --noninteractive --agree-tos --email {{ certbot_admin_email }}"
+  become: true
+  when: not letsencrypt_cert.stat.exists
+
+- name: Reload nginx after certificate installation
+  service:
+    name: nginx
+    state: reloaded
+  when: not letsencrypt_cert.stat.exists
