@@ -1,0 +1,21 @@
+---
+- hosts: raspberry
+  remote_user: pi
+  become: true
+
+  tasks:
+    # infos comes from here
+    # https://raspberrypi.stackexchange.com/questions/37920/how-do-i-set-up-networking-wifi-static-ip-address/74428#74428
+    - name: Enable Static IP with dhcpcd.conf
+      blockinfile:
+        path: /etc/dhcpcd.conf
+        block: |
+          interface eth0
+          static ip_address={{ static_server_ip }}/24
+          static routers={{ router_ip }}
+          static domain_name_servers={{ dns }}
+        insertbefore: EOF
+        marker: "# {mark} ANSIBLE BLOCK: static IP"
+
+    - name: reboot now
+      reboot:
