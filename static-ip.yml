@@ -2,6 +2,10 @@
 - hosts: raspberry
   remote_user: pi
   become: true
+  vars:
+    static_server_ip: 192.168.1.2
+    router_ip: 192.168.1.1
+    dns: 213.57.22.5 213.57.2.5
 
   tasks:
     # infos comes from here
