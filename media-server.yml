@@ -16,7 +16,7 @@
       users:
         - username: pi
           name: pi
-          groups: ['sudo']
+          groups: ['sudo', 'www-data']
           password: "{{ pi_password }}"
           ssh_key:
             - "{{ pi_ssh_key }}"
@@ -69,6 +69,7 @@
     - role: post-install
       plex_server_name: plex.alxs.fr
       transmission_server_name: transmission.alxs.fr
+      certbot_admin_email: "{{ certbot_email }}"
       domains_to_cert:
         - plex.alxs.fr
         - transmission.alxs.fr
