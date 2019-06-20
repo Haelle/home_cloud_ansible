@@ -10,6 +10,7 @@ Ansible scripts to deploy a cloud server (Plex, Nextcloud, backups etc...)
   - pi_ssh_key (remove it from `media-server.yml` if you don't want an ssh-key)
   - nextcloud_admin_password
   - nextcloud_db_password
+  - certbot_email
 
 Reference this file in `media-server.yml` instead of `./secrets.yml`
 

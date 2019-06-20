@@ -16,6 +16,7 @@
       - build-essential
       - powerline
       - fonts-powerline
+      - silversearcher-ag
 
 # UUID from `blkid`
 - name: auto mount data disk
@@ -24,6 +25,12 @@
     src: UUID={{ disk_uuid }}
     fstype: ext4
     opts: defaults
-    passno: 2
     state: mounted
+  tags: fstab
+
+- name: set hard drive rights
+  file:
+    path: "{{ mount_point }}"
+    state: directory
+    mode: u=rwX,g=rX,o=rX
   tags: fstab
