@@ -1,5 +1,5 @@
 ---
-- hosts: raspberry
+- hosts: raspberry-local
   remote_user: pi # default password is 'raspberry'
   become: true
   vars:
@@ -22,8 +22,9 @@
             - "{{ pi_ssh_key }}"
       tags: users
 
-    - role: viasite-ansible.zsh
-      zsh_user: pi
+    - role : haelle.oh_my_zsh
+      users:
+        - pi
       tags: zsh
 
     - role: elboletaire.transmission

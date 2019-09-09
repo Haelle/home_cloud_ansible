@@ -1,8 +1,8 @@
 - src: singleplatform-eng.users
   version: v1.2.6
-- src: viasite-ansible.zsh
-  version: v3.2.5
 - src: elboletaire.transmission
   version: 2.0.1
 - src: aalaesar.install_nextcloud
   version: v1.3.4
+- src: haelle.oh_my_zsh
+  version: v0.4
