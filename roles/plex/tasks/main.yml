@@ -2,9 +2,6 @@
 - name: Install Plex Media Server
   include_tasks: install.yml
 
-- name: Install csfd-plex (metadata agent)
-  include_tasks: csfd.yml
-
 - name: Plex register directory state (is link?)
   stat:
     path: "/var/lib/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server"

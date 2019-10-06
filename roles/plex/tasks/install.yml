@@ -4,25 +4,26 @@
     name: apt-transport-https
     state: present
 
-- name: Add dev2day PMS key
+- name: Add plexmediaserver key
   apt_key:
-    url: https://dev2day.de/pms/dev2day-pms.gpg.key
+    url: https://downloads.plex.tv/plex-keys/PlexSign.key
     state: present
 
-- name: Add dev2day PMS repo
+- name: Add plexmediaserver repo
   apt_repository:
-    repo: deb https://dev2day.de/pms/ {{ ansible_distribution_release }} main
+    repo: deb https://downloads.plex.tv/repo/deb/ public main
     state: present
-  register: dev2day_pms_repo_added
+  register: plex_repo_added
 
 - name: Update
   apt:
     update_cache: yes
-  when: dev2day_pms_repo_added.changed
+  when: plex_repo_added.changed
 
 - name: Install plexmediaserver
   apt:
-    name: plexmediaserver-installer
+    name: plexmediaserver
+    # TODO: default_release may not work, new repo has "public" and not "stretch"
     default_release: "{{ ansible_distribution_release }}"
     state: latest
   notify: restart plex
