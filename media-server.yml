@@ -22,6 +22,9 @@
             - "{{ pi_ssh_key }}"
       tags: users
 
+    - role: haelle.vimrc
+      tags: vim
+
     - role : haelle.oh_my_zsh
       users:
         - pi
