@@ -23,6 +23,7 @@
       tags: users
 
     - role: haelle.vimrc
+      become: false
       tags: vim
 
     - role : haelle.oh_my_zsh
