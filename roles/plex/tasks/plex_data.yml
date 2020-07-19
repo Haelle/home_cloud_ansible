@@ -1,7 +1,7 @@
 ---
 - name: create destination directory
   file:
-    path: "{{ mount_point}}/plex_data"
+    path: "{{ plex_data_mount_point}}"
     state: directory
     owner: plex
     group: plex
@@ -12,7 +12,7 @@
     state: stopped
 
 - name: copy current config to data partition
-  shell: cp -r /var/lib/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server {{ mount_point }}/plex_data
+  shell: cp -r /var/lib/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server {{ plex_data_mount_point }}
   become: true
 
 - name: backup Plex files
@@ -21,16 +21,16 @@
 
 - name: change rights for plex directory
   file:
-    path: "{{ mount_point }}/plex_data"
+    path: "{{ plex_data_mount_point }}"
     owner: plex
     group: plex
     state: directory
     mode: u=rwX,g=rX,o=rX
-    recurse: yes
+    recurse: 'yes'
 
 - name: create symlink
   file:
-    src: "{{ mount_point }}/plex_data/Plex\ Media\ Server"
+    src: "{{ plex_data_mount_point }}/Plex\ Media\ Server"
     path: "/var/lib/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server"
     owner: plex
     group: plex

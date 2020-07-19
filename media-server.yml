@@ -1,15 +1,19 @@
 ---
 - hosts: raspberry-local
-  remote_user: pi # default password is 'raspberry'
+  remote_user: pi  # default password is 'raspberry'
   become: true
   vars:
-    mount_point: /media/data
-    disk_uuid: f3ebf1cd-ce7f-4633-ac6d-3b5945ff85e4
+    disks:
+      - mount_point: /media/data
+        disk_label: Raspbian_1
+      - mount_point: /media/raspbian_2
+        disk_label: Raspbian_2
   vars_files:
     - ./secrets.yml
 
   roles:
     - role: pre-install
+      plex_data_mount_point: "{{ disks[0].mount_point }}/plex_data"
       tags: pre-install
 
     - role: singleplatform-eng.users
@@ -26,7 +30,7 @@
       become: false
       tags: vim
 
-    - role : haelle.oh_my_zsh
+    - role: haelle.oh_my_zsh
       users:
         - pi
       tags: zsh
@@ -35,10 +39,12 @@
       transmission_user: pi
       transmission_password: "{{ tranmission_password }}"
       transmission_rpc_auth_required: true
-      transmission_download_dir: "{{ mount_point }}/downloads"
-      transmission_incomplete_dir: "{{ mount_point }}/.incomplete"
-      transmission_watch_dir: "{{ mount_point }}/torrents"
+      transmission_download_dir: "{{ disks[0].mount_point }}/downloads"
+      transmission_incomplete_dir: "{{ disks[0].mount_point }}/.incomplete"
+      transmission_watch_dir: "{{ disks[0].mount_point }}/torrents"
       transmission_rpc_whitelist_enabled: false
+      transmission_peer_port: 51413
+      transmission_port_forwarding_enabled: true
       tags: transmission
 
     - role: plex
@@ -49,7 +55,7 @@
 
     - role: aalaesar.install_nextcloud
       php_version: "7.3"
-      php_custom: yes
+      php_custom: 'yes'
       php_ver: "{{ php_version }}"
       php_dir: "/etc/php/{{ php_version }}"
       php_bin: "php-fpm{{ php_version }}"
@@ -65,7 +71,7 @@
       nextcloud_trusted_domain:
         - cloud.alxs.fr
       nextcloud_websrv: nginx
-      nextcloud_data_dir: "{{ mount_point }}/nextcloud"
+      nextcloud_data_dir: "{{ disks[0].mount_point }}/nextcloud"
       nextcloud_admin_pwd: "{{ nextcloud_admin_password }}"
       nextcloud_db_backend: pgsql
       nextcloud_db_pwd: "{{ nextcloud_db_password }}"

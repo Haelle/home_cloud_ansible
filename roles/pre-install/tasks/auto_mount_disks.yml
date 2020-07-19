@@ -1,0 +1,17 @@
+---
+# LABEL/UUID from `blkid`
+- name: auto mount data disk {{ item.mount_point }}
+  mount:
+    path: "{{ item.mount_point }}"
+    src: LABEL={{ item.disk_label }}
+    fstype: ext4
+    opts: defaults
+    state: mounted
+  tags: fstab
+
+- name: set hard drive rights {{ item.mount_point }}
+  file:
+    path: "{{ item.mount_point }}"
+    state: directory
+    mode: u=rwX,g=rX,o=rX
+  tags: fstab

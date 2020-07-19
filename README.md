@@ -18,10 +18,15 @@ Reference this file in `media-server.yml` instead of `./secrets.yml`
 ```bash
 ansible-galaxy install -r requirements.yml
 ansible-playbook media-server.yml
-ansible u- pi -m setup <hostname>
 ```
 
 # Other
+
+See all ansible variables for a host
+```bash
+ansible u- pi -m setup <hostname>
+```
+
 ## Check piplening is enabled
 If in the log there is only ONE `SSH: EXEC ssh....` it's working if not there will be 3-5 occurences (https://stackoverflow.com/questions/43438519/check-if-ansible-pipelining-is-enabled-working) :
 ```bash
