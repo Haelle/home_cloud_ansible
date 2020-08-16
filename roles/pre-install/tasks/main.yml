@@ -4,8 +4,13 @@
     name: ssh
     enabled: 'yes'
 
+# Options :
+# B1: console
+# B2: console auto-login
+# B3: desktop
+# B4: desktop auto-login
 - name: Disable GUI at boot time
-  command: raspi-config nonint do_boot_behaviour B1
+  command: raspi-config nonint do_boot_behaviour B2
   become: true
 
 - name: Install mandatory packages
