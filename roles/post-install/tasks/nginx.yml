@@ -30,3 +30,19 @@
     state: link
   notify: reload nginx
   tags: plex
+
+- name: Copy Nginx conf Airsonic
+  template:
+    src: airsonic.conf.j2
+    dest: /etc/nginx/sites-available/airsonic.conf
+    mode: 0644
+  notify: reload nginx
+  tags: airsonic
+
+- name: symlink to site enabled Airsonic
+  file:
+    src: /etc/nginx/sites-available/airsonic.conf
+    path: /etc/nginx/sites-enabled/airsonic.conf
+    state: link
+  notify: reload nginx
+  tags: airsonic

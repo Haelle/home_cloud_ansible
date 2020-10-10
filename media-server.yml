@@ -1,5 +1,5 @@
 ---
-- hosts: raspberry-local
+- hosts: raspberry-public
   remote_user: pi  # default password is 'raspberry'
   become: true
   vars:
@@ -33,7 +33,11 @@
     - role: haelle.oh_my_zsh
       users:
         - pi
+      become: false
       tags: zsh
+
+    - role: haelle.airsonic
+      tags: airsonic
 
     - role: elboletaire.transmission
       transmission_user: pi
@@ -80,6 +84,7 @@
     - role: post-install
       plex_server_name: plex.alxs.fr
       transmission_server_name: transmission.alxs.fr
+      airsonic_server_name: music.alxs.fr
       certbot_admin_email: "{{ certbot_email }}"
       domains_to_cert:
         - plex.alxs.fr
