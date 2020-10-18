@@ -79,6 +79,7 @@
       nextcloud_admin_pwd: "{{ nextcloud_admin_password }}"
       nextcloud_db_backend: pgsql
       nextcloud_db_pwd: "{{ nextcloud_db_password }}"
+      nextcloud_hsts: "max-age=15768000; includeSubDomains; preload"
       tags: nextcloud
 
     - role: post-install
