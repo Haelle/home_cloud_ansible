@@ -1,0 +1,13 @@
+---
+- name: Add X-Frame-Options SAMEORIGIN
+  lineinfile:
+    path: /etc/nginx/sites-available/nc_cloud.alxs.fr.cnf
+    line: '    add_header X-Frame-Options "SAMEORIGIN";'
+    insertbefore: 'X-Content-Type-Options'
+    firstmatch: 'yes'
+    state: present
+  tags:
+    - nginx
+    - nextcloud
+    - nextcloud-frame-options
+  notify: reload nginx

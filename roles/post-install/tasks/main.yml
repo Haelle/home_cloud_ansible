@@ -10,3 +10,7 @@
 - name: Certbot
   include: certbot.yml
   tags: certbot
+
+- name: Nextcloud
+  include: nextcloud.yml
+  tags: nextcloud
