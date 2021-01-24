@@ -1,0 +1,25 @@
+---
+# TODO: does this work ?
+- name: Install dependencies
+  apt:
+    name:
+      - libffi-dev
+      - libssl-dev
+    state: present
+
+- include_role:
+    name: geerlingguy.pip
+  vars:
+    pip_install_packages:
+      - name: docker
+
+- include_role:
+    name: geerlingguy.docker
+  vars:
+    docker_install_compose: true
+    docker_users:
+      - pi
+
+- name: Install docker-compose from pip3
+  become: true
+  shell: pip3 install docker-compose

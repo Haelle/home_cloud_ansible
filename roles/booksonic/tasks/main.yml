@@ -1,0 +1,22 @@
+---
+- name: Create config directory
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: u=rwX,g=rX,o=rX
+  loop:
+    - "{{ booksonic_config_path }}"
+    - "{{ booksonic_audiobooks_path}}"
+    - "{{ booksonic_podcasts_path}}"
+    - "{{ booksonic_other_media_path}}"
+
+- name: copy docker-compose
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ booksonic_config_path}}/docker-compose.yml"
+    mode: 0644
+
+- name: Create and start services
+  become_user: pi
+  community.general.docker_compose:
+    project_src: "{{ booksonic_config_path }}"

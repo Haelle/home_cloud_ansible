@@ -1,0 +1,19 @@
+---
+version: "2.1"
+services:
+  booksonic-air:
+    image: ghcr.io/linuxserver/booksonic-air
+    container_name: booksonic-air
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Paris
+      - CONTEXT_PATH=/
+    volumes:
+      - {{ booksonic_config_path }}:/config
+      - {{ booksonic_audiobooks_path }}:/audiobooks
+      - {{ booksonic_podcasts_path }}:/podcasts
+      - {{ booksonic_other_media_path }}:/othermedia
+    ports:
+      - 4040:{{ booksonic_port }}
+    restart: unless-stopped

@@ -1,0 +1,6 @@
+---
+booksonic_config_path: /var/booksonic
+booksonic_audiobooks_path: /media/data/medias/livres_audios
+booksonic_podcasts_path: /media/data/medias/podcasts
+booksonic_other_media_path: /media/data/medias/autres
+booksonic_port: 4040

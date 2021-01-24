@@ -11,3 +11,11 @@
   version: 0.5.0
 - src: haelle.airsonic
   version: 0.3.0
+- src: geerlingguy.docker
+  version: 2.9.0
+# not sure if is useful
+# currently not used but maybe needed for docker to work
+- src: geerlingguy.pip
+  version: 2.0.0
+- src: haelle.certbot_ansible
+  version: 1.2.0
