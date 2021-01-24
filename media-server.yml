@@ -3,6 +3,7 @@
   remote_user: pi  # default password is 'raspberry'
   become: true
   vars:
+    ansible_python_interpreter: /usr/bin/python3
     disks:
       - mount_point: /media/data
         disk_label: Raspbian_1
@@ -51,9 +52,6 @@
       transmission_port_forwarding_enabled: true
       tags: transmission
 
-    - role: plex
-      tags: plex
-
     - role: php
       tags: nextcloud
 
@@ -84,13 +82,28 @@
       nextcloud_hsts: "max-age=15768000; includeSubDomains; preload"
       tags: nextcloud
 
+    - role: docker
+      tags:
+        - docker
+        - booksonic
+
+    - role: booksonic
+      tags:
+        - docker
+        - booksonic
+
     - role: post-install
       plex_server_name: plex.alxs.fr
       transmission_server_name: transmission.alxs.fr
       airsonic_server_name: music.alxs.fr
+      booksonic_server_name: audiobook.alxs.fr
+      tags: post-install
+
+    - role: haelle.certbot_ansible
       certbot_admin_email: "{{ certbot_email }}"
       domains_to_cert:
         - plex.alxs.fr
         - transmission.alxs.fr
         - cloud.alxs.fr
-      tags: post-install
+        - audiobook.alxs.fr
+      tags: certbot
