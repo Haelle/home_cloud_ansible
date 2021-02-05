@@ -1,4 +1,25 @@
 ---
+- name: Install Nginx
+  apt:
+    name: nginx
+    state: present
+
+- name: Remove TLSv1.0 & TLSv1.1 Nginx support
+  lineinfile:
+    path: /etc/nginx/nginx.conf
+    regexp: 'ssl_protocols'
+    line: '  ssl_protocols TLSv1.2;'
+    state: present
+  notify: restart nginx
+
+- name: Disable Ciphers kindness
+  lineinfile:
+    path: /etc/nginx/nginx.conf
+    regexp: 'ssl_prefer_server_ciphers'
+    line: '  ssl_prefer_server_ciphers off;'
+    state: present
+  notify: restart nginx
+
 - name: Copy Nginx conf Transmission
   template:
     src: transmission.conf.j2
