@@ -8,3 +8,6 @@
   service:
     name: nginx
     state: restarted
+
+- name: Restart ssh
+  service: name=ssh state=restarted

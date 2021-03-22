@@ -1,0 +1,19 @@
+---
+- hosts: vps-axine
+  remote_user: ubuntu
+  become: true
+  vars_files:
+    - ./secrets.yml
+
+  roles:
+    - role: singleplatform-eng.users
+      users:
+        - username: ubuntu
+          name: ubuntu
+          groups: ['sudo', 'www-data']
+          password: "{{ ubuntu_password }}"
+          ssh_key:
+            - "{{ ssh_key }}"
+      tags: users
+
+

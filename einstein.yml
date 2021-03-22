@@ -1,5 +1,5 @@
 ---
-- hosts: raspberry-public
+- hosts: raspberry-einstein
   remote_user: pi  # default password is 'raspberry'
   become: true
   vars:
@@ -24,7 +24,7 @@
           groups: ['sudo', 'www-data']
           password: "{{ pi_password }}"
           ssh_key:
-            - "{{ pi_ssh_key }}"
+            - "{{ ssh_key }}"
       tags: users
 
     - role: haelle.vimrc
