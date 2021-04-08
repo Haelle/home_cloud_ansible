@@ -1,0 +1,37 @@
+---
+- name: Create user (without password)
+  user:
+    name: "{{ item.name }}"
+    group: sudo
+  with_items: "{{ users }}"
+
+- name: Set authorized key for users
+  authorized_key:
+    user: '{{ item.name }}'
+    state: present
+    key: '{{ item.ssh_key }}'
+  with_items: "{{ users }}"
+  when: item.ssh_key is defined
+
+- name: Disallow SSH password authentication
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "^PasswordAuthentication"
+    line: "PasswordAuthentication no"
+    state: present
+  notify: restart ssh
+
+- name: Disallow root SSH access
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "^PermitRootLogin"
+    line: "PermitRootLogin no"
+    state: present
+  notify: restart ssh
+
+- name: Passwordless users
+  lineinfile:
+    path: /etc/sudoers
+    regexp: '\%sudo.+ALL=\(ALL:ALL\).+ALL'
+    line: '%sudo ALL=(ALL:ALL) NOPASSWD: ALL'
+    state: present
