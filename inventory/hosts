@@ -1,4 +1,4 @@
-[raspberry-local]
-192.168.1.2
-[raspberry-einstein]
-cloud.alxs.fr
+raspberry-local      ansible_host=192.168.1.2
+raspberry-rothomagus ansible_host=rothomagus.alxs.fr
+raspberry-lutece     ansible_host=lutece.alxs.fr
+vps-treola           ansible_host=treola.alxs.fr
