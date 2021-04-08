@@ -1,0 +1,25 @@
+---
+# change ansible.cfg ask_pass to true is needed
+- hosts: raspberry-lutece
+  become: true
+  remote_user: "{{ default_user }}"
+  gather_facts: "no"
+  vars_files:
+    - ./secrets.yml
+
+  pre_tasks:
+    - local_action: command ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no {{ default_user }}@{{ ansible_host }} "echo success"
+      register: default_connection_attempt
+      ignore_errors: "yes"
+
+    - set_fact:
+        default_connection_failed: "{{ default_connection_attempt.rc != 0 }}"
+
+    - debug:
+        msg: "Default connection for {{ ansible_host }} disabled ? {{ default_connection_failed }}"
+
+  roles:
+    - role: create_ssh_user
+      users: "{{ server_users }}"
+      tags: user
+      when: not default_connection_failed
