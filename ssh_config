@@ -1,0 +1,21 @@
+Host rothomagus
+  Hostname rothomagus.alxs.fr
+  ControlMaster auto
+  ControlPath ~/.ssh/cm_socket/%r@%h:%p
+  User pi
+  ForwardAgent yes
+  Port 22
+
+Host lutece
+  Hostname lutece.alxs.fr
+  ControlMaster auto
+  ControlPath ~/.ssh/cm_socket/%r@%h:%p
+  ForwardAgent yes
+  Port 22
+
+Host treola
+  Hostname treola.alxs.fr
+  ControlMaster auto
+  ControlPath ~/.ssh/cm_socket/%r@%h:%p
+  ForwardAgent yes
+  Port 22
