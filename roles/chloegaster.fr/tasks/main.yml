@@ -1,0 +1,39 @@
+---
+- name: Install PHP
+  include: php.yml
+  tags:
+    - php
+
+- name: Install & configure MySQL
+  include: mysql.yml
+  tags:
+    - mysql
+
+- name: Download & install Wordpress
+  include: wordpress.yml
+  tags:
+    - wordpress
+
+- name: Nginx conf
+  include: nginx_conf.yml
+  tags:
+    - nginx
+
+- name: restart Nginx service
+  service:
+    name: nginx
+    state: restarted
+  tags:
+    - nginx
+
+- name: Setup SSL for the domain
+  include_role:
+    name: geerlingguy.certbot
+  vars:
+    certbot_install_method: snap
+    certbot_create_if_missing: 'yes'
+    certbot_create_method: standalone
+    certbot_admin_email: "{{ chloegaster.certbot_email }}"
+    certbot_certs:
+      - domains:
+        - "{{ chloegaster.fqdn }}"

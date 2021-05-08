@@ -1,0 +1,9 @@
+---
+- name: Install PHP & utils
+  apt:
+    pkg:
+      - php
+      - php-curl
+      - php-fpm
+      - php-mysql
+    state: latest

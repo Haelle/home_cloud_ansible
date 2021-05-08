@@ -1,0 +1,12 @@
+---
+- name: Copy Nginx conf
+  copy:
+    src: ./files/nginx.conf
+    dest: /etc/nginx/sites-available/chloegaster.fr.conf
+    mode: 0644
+
+- name: symlink to site enabled
+  file:
+    src: /etc/nginx/sites-available/chloegaster.fr.conf
+    path: /etc/nginx/sites-enabled/chloegaster.fr.conf
+    state: link

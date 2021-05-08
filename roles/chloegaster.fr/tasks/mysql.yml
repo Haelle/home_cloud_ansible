@@ -1,0 +1,27 @@
+---
+- name: Install MySQL
+  apt:
+    name: mysql-server
+    state: latest
+
+- name: Make sure pymysql is present
+  become: true # needed if the other tasks are not played as root
+  pip:
+    name: pymysql
+    state: present
+
+# https://stackoverflow.com/questions/44614863/ansible-unable-to-find-my-cnf-cant-connect-to-local-mysql-server
+- name: Create mysql database
+  mysql_db:
+    name: '{{ wp_mysql_db }}'
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    state: present
+
+# https://stackoverflow.com/questions/44614863/ansible-unable-to-find-my-cnf-cant-connect-to-local-mysql-server
+- name: Create mysql user
+  mysql_user:
+    name: '{{ wp_mysql_user }}'
+    password: '{{ wp_mysql_password }}'
+    priv: '*.*:ALL'
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    state: present
