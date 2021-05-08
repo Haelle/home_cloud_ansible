@@ -37,6 +37,20 @@ See all ansible variables for a host
 ansible u- pi -m setup <hostname>
 ```
 
+### Nextcloud sync problems
+
+Nextcloud sometimes fails to sync, I can be because of differences appearing between Nextcloud database and the file system.
+
+It can be fixed with this command :
+
+```shell
+sudo -u www-data php occ db:add-missing-indices
+sudo -u www-data php occ files:scan --all
+sudo -u www-data php occ files:cleanup
+```
+
+The second one is the most important, and tackle most of the problems
+
 ### Check piplening is enabled
 
 If in the log there is only ONE `SSH: EXEC ssh....` it's working if not there will be 3-5 occurences (https://stackoverflow.com/questions/43438519/check-if-ansible-pipelining-is-enabled-working) :
