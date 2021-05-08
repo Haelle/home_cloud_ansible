@@ -1,1 +1,62 @@
 ---
+# TODO creation from empty server
+- hosts: vps-treola
+  become: true
+  remote_user: "{{ server_user.name }}"
+  vars:
+    nextcloud_dir: "/home/{{ server_user.name }}/Nextcloud/"
+  vars_files:
+    - ./secrets.yml
+
+  roles:
+    - role: basic_setup
+      user: "{{ server_user }}"
+      tags: basic
+
+    - role: haelle.vimrc
+      become_user: "{{ server_user.name }}"
+      tags: vim
+
+    - role: haelle.oh_my_zsh
+      users:
+        - "{{ server_user.name }}"
+      tags: zsh
+
+    - role: chloegaster.fr
+      chloegaster:
+        certbot_email: "{{ certbot_email }}"
+        fqdn: chloegaster.fr
+      tags: chloegaster
+
+    - role: haelle.calibre_web_ansible
+      calibre_web:
+        name: alexandrie
+        port: 8086
+        fqdn: alexandrie.alxs.fr
+        db_symlink_path: '{{ nextcloud_dir }}Livres_numériques/calibre-web-configs/alexandrie-app.db'
+        certbot_email: "{{ certbot_email }}"
+      tags:
+        - alexandrie
+        - calibre
+
+    - role: haelle.calibre_web_ansible
+      calibre_web:
+        name: bazar
+        port: 8087
+        fqdn: bazar.alxs.fr
+        db_symlink_path: '{{ nextcloud_dir }}Livres_numériques/calibre-web-configs/bazar-app.db'
+        certbot_email: "{{ certbot_email }}"
+      tags:
+        - bazar
+        - calibre
+
+    - role: haelle.calibre_web_ansible
+      calibre_web:
+        name: comics
+        port: 8088
+        fqdn: comics.alxs.fr
+        db_symlink_path: '{{ nextcloud_dir }}Livres_numériques/calibre-web-configs/comics-app.db'
+        certbot_email: "{{ certbot_email }}"
+      tags:
+        - comics
+        - calibre
