@@ -1,0 +1,45 @@
+---
+- name: Install tmux
+  apt:
+    name: tmux
+    state: latest
+
+# TODO
+
+#- name: Set .tmux directory owner for {{ user.name }}
+  #become_user: '{{ user.name }}'
+  #file:
+    #path:     '~/.tmux'
+    #group:    '{{ user.name }}'
+    #owner:    '{{ user.name }}'
+    #state:    directory
+    #mode:     '0755'
+    #recurse:  true
+
+#- name: Clone tmux Plugin Manager for {{ user.name }}
+  #become_user: '{{ user.name }}'
+  #git:
+    #repo: 'https://github.com/tmux-plugins/tpm'
+    #dest: '~/.tmux/plugins/tpm'
+    #update: no
+
+#- name: Copy tmux.conf file for {{ user.name }}
+  #become_user: '{{ user.name }}'
+  #copy:
+    #src:    './files/tmux.conf'
+    #dest:   '~/.tmux.conf'
+    #mode:   '0644'
+
+#- name: Check if some tmux are running
+  #become_user: '{{ user.name }}'
+  #shell: 'tmux ls | wc -l'
+  #register: tmux_ls
+
+#- name: Source .tmux for tpm
+  #become_user: '{{ user.name }}'
+  #command: 'tmux source ~/.tmux.conf'
+  #when: tmux_ls.stderr == ""
+
+#- name: Install tmux plugins for {{ user.name }}
+  #become_user: '{{ user.name }}'
+  #command: '~/.tmux/plugins/tpm/bin/install_plugins'

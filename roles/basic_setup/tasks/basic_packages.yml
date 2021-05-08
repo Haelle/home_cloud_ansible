@@ -1,0 +1,37 @@
+---
+- name: Install basic packages
+  apt:
+    pkg:
+      - ansible
+      - build-essential
+      - colordiff
+      - cowsay
+      - curl
+      - fail2ban
+      - finger
+      - htop
+      - jq
+      - lftp
+      - libffi-dev
+      - libpq-dev
+      - libpq5
+      - libreadline-dev
+      - libsqlite3-dev
+      - libssl-dev
+      - lynx
+      - magic-wormhole
+      - mosh
+      - net-tools
+      - pandoc
+      - postgresql
+      - putty
+      - python3-tk
+      - ruby
+      - snapd
+      - software-properties-common
+      - sqlite3
+      - telnet
+      - tree
+      - whois
+      - zlib1g-dev
+    state: latest

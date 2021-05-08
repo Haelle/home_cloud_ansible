@@ -1,0 +1,13 @@
+---
+- name: Install git
+  apt:
+    name:
+      - git
+      - git-flow
+    state: latest
+
+- name: Copy gitignore file
+  template:
+    src: ./gitconfig.j2
+    dest: ~/.gitconfig
+    mode: '0644'

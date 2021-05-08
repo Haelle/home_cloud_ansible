@@ -1,0 +1,11 @@
+---
+- name: Install ag
+  apt:
+    name: silversearcher-ag
+    state: latest
+
+- name: Copy agignore file
+  copy:
+    src: agignore
+    dest: ~/.agignore
+    mode: '0644'

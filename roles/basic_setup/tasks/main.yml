@@ -1,0 +1,38 @@
+---
+- name: Rename server
+  include: hostname.yml
+
+- name: Ensure Apitude is installed
+  apt:
+    name: aptitude
+    state: present
+
+- name: Apitude Update
+  apt:
+    update_cache: yes
+
+- name: Install & Configure Uncomplicated Firewall (ufw)
+  include: ufw.yml
+  tags: ufw
+
+- name: Install basic packages
+  include: basic_packages.yml
+
+- name: Install & configure Ag SilverSearch
+  include: ag_setup.yml
+  tags:
+    - ag
+    - silversearch
+
+- name: Install & configure Git
+  include: git_setup.yml
+  tags: git
+
+- name: Install & configure Tmux
+  include: tmux_setup.yml
+  tags: tmux
+
+- name: Install lolcat
+  community.general.gem:
+    name: lolcat
+    state: present

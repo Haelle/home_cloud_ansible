@@ -1,0 +1,13 @@
+---
+# Both are mandatory
+- name: Rename server
+  hostname:
+    name: "{{ hostname }}"
+
+# this prevent "Temporary failure in name resolution"
+# when using sudo
+- name: Update hosts file
+  lineinfile:
+    path: /etc/hosts
+    line: "127.0.0.1 {{ hostname }}"
+    state: present
