@@ -1,14 +1,10 @@
 ---
+# TODO: make a full reinstall to make it work properly
 - hosts: raspberry-rothomagus
   remote_user: pi  # default password is 'raspberry'
   become: true
   vars:
     ansible_python_interpreter: /usr/bin/python3
-    disks:
-      - mount_point: /media/data
-        disk_label: Raspbian_1
-      - mount_point: /media/raspbian_2
-        disk_label: Raspbian_2
   vars_files:
     - ./secrets.yml
 
@@ -16,6 +12,13 @@
     - role: pre-install
       plex_data_mount_point: "{{ disks[0].mount_point }}/plex_data"
       tags: pre-install
+
+    - role: disks_setup
+      disks:
+      - mount_point: /media/data
+        disk_label: Raspbian_1
+      - mount_point: /media/raspbian_2
+        disk_label: Raspbian_2
 
     - role: singleplatform-eng.users
       users:
@@ -34,23 +37,22 @@
     - role: haelle.oh_my_zsh
       users:
         - pi
-      become: false
       tags: zsh
 
     - role: haelle.airsonic
       tags: airsonic
 
-    - role: elboletaire.transmission
-      transmission_user: pi
-      transmission_password: "{{ tranmission_password }}"
-      transmission_rpc_auth_required: true
-      transmission_download_dir: "{{ disks[0].mount_point }}/downloads"
-      transmission_incomplete_dir: "{{ disks[0].mount_point }}/.incomplete"
-      transmission_watch_dir: "{{ disks[0].mount_point }}/torrents"
-      transmission_rpc_whitelist_enabled: false
-      transmission_peer_port: 51413
-      transmission_port_forwarding_enabled: true
-      tags: transmission
+    #- role: elboletaire.transmission
+      #transmission_user: pi
+      #transmission_password: "{{ tranmission_password }}"
+      #transmission_rpc_auth_required: true
+      #transmission_download_dir: "{{ disks[0].mount_point }}/downloads"
+      #transmission_incomplete_dir: "{{ disks[0].mount_point }}/.incomplete"
+      #transmission_watch_dir: "{{ disks[0].mount_point }}/torrents"
+      #transmission_rpc_whitelist_enabled: false
+      #transmission_peer_port: 51413
+      #transmission_port_forwarding_enabled: true
+      #tags: transmission
 
     - role: php
       tags: nextcloud
@@ -71,6 +73,7 @@
         - "php{{ php_version }}-bcmath"
         - "php{{ php_version }}-gmp"
         - "php-redis"
+      # Spécifier PHP version peut casser (non ?)
       php_socket: "/var/run/php/php{{ php_version }}-fpm.sock"
       nextcloud_trusted_domain:
         - cloud.alxs.fr
@@ -104,8 +107,9 @@
       certbot_admin_email: "{{ certbot_email }}"
       domains_to_cert:
         - plex.alxs.fr
-        - transmission.alxs.fr
+        #- transmission.alxs.fr
         - cloud.alxs.fr
         - nuage.alxs.fr
+        - music.alxs.fr
         - audiobook.alxs.fr
       tags: certbot
