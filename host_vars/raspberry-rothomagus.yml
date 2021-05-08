@@ -1,0 +1,8 @@
+---
+default_user: pi
+hostname: rothomagus
+server_user:
+  name: pi
+  fullname: Pi
+  email: '{{ email }}'
+  ssh_key: '{{ ssh_key }}'

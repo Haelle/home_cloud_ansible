@@ -1,6 +1,6 @@
 ---
 default_user: ubuntu
-hostname: lutece
+hostname: treola
 server_user:
   name: '{{ name }}'
   fullname: '{{ fullname }}'
