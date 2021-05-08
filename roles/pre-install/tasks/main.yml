@@ -22,8 +22,3 @@
       - powerline
       - fonts-powerline
       - silversearcher-ag
-
-- name: Setup fstab & disks rights
-  include: auto_mount_disks.yml
-  with_items: '{{ disks }}'
-  tags: fstab

@@ -3,10 +3,11 @@
 - name: auto mount data disk {{ item.mount_point }}
   mount:
     path: "{{ item.mount_point }}"
-    src: LABEL={{ item.disk_label }}
+    src: "LABEL={{ item.disk_label }}"
     fstype: ext4
     opts: defaults
     state: mounted
+  with_items: "{{ disks }}"
   tags: fstab
 
 - name: set hard drive rights {{ item.mount_point }}
@@ -14,4 +15,5 @@
     path: "{{ item.mount_point }}"
     state: directory
     mode: u=rwX,g=rX,o=rX
+  with_items: "{{ disks }}"
   tags: fstab
