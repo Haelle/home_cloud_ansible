@@ -1,6 +1,4 @@
 ---
-- src: singleplatform-eng.users
-  version: v1.2.6
 - src: elboletaire.transmission
   version: 2.0.1
 - src: aalaesar.install_nextcloud

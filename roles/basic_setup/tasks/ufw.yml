@@ -47,7 +47,7 @@
     - { port: '53', proto: 'tcp' }
     - { port: '53', proto: 'udp' }
     - { port: '67', proto: 'udp' }
-  when: open_dns_port is defined
+  when: open_dns_port | bool
 
 - name: Enable UFW
   ufw:

@@ -1,4 +1,5 @@
 ---
+# does not work alone, should be included
 - hosts: "{{ runnig_hosts }}"
   become: true
   remote_user: "{{ server_user.name }}"

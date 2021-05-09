@@ -27,16 +27,6 @@
       - mount_point: /media/raspbian_2
         disk_label: Raspbian_2
 
-    #- role: singleplatform-eng.users
-      #users:
-        #- username: pi
-          #name: pi
-          #groups: ['sudo', 'www-data']
-          #password: "{{ pi_password }}"
-          #ssh_key:
-            #- "{{ ssh_key }}"
-      #tags: users
-
     - role: haelle.airsonic
       tags: airsonic
 
@@ -96,13 +86,18 @@
       booksonic_server_name: audiobook.alxs.fr
       tags: post-install
 
-    - role: haelle.certbot_ansible
-      certbot_admin_email: "{{ certbot_email }}"
-      domains_to_cert:
-        - plex.alxs.fr
-        #- transmission.alxs.fr
-        - cloud.alxs.fr
-        - nuage.alxs.fr
-        - music.alxs.fr
-        - audiobook.alxs.fr
+    - role: haelle.certbot
+      vars:
+        certbot_install_method: snap
+        certbot_create_if_missing: 'yes'
+        certbot_create_method: standalone
+        certbot_admin_email: "{{ certbot_email }}"
+        certbot_certs:
+          - domains:
+            - plex.alxs.fr
+            #- transmission.alxs.fr
+            - cloud.alxs.fr
+            - nuage.alxs.fr
+            - music.alxs.fr
+            - audiobook.alxs.fr
       tags: certbot
