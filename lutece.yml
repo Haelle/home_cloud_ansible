@@ -20,6 +20,43 @@
 
   roles:
     - role: create_ssh_user
-      users: "{{ server_users }}"
+      users:
+        - "{{ server_user }}"
       tags: user
       when: not default_connection_failed
+
+- name: Install shared configuration
+  import_playbook: shared_install.yml
+  vars:
+    runnig_hosts: raspberry-lutece
+    open_dns_port: "yes"
+
+- hosts: raspberry-lutece
+  become: true
+  remote_user: "{{ server_user.name }}"
+  vars_files:
+    - ./secrets.yml
+
+  roles:
+    - role: disks_setup
+      disks:
+        - mount_point: /media/Lutece_1
+          disk_label: Lutece_1
+
+    - role: haelle.certbot
+      vars:
+        certbot_install_method: snap
+        certbot_create_if_missing: 'yes'
+        certbot_create_method: standalone
+        certbot_admin_email: "{{ certbot_email }}"
+        certbot_certs:
+          - domains:
+            - "trou-noir.alxs.fr"
+      tags:
+        - certbot
+        - pi-hole
+
+    - role: pi_hole
+      vars:
+        docker_user: "{{ server_user.name }}"
+      tags: pi-hole

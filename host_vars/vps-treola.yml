@@ -1,6 +1,8 @@
 ---
 default_user: ubuntu
 hostname: treola
+# $ arch => x86_64
+docker_apt_arch: amd64
 server_user:
   name: '{{ name }}'
   fullname: '{{ fullname }}'

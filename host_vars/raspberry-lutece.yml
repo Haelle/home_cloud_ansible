@@ -1,6 +1,8 @@
 ---
 default_user: ubuntu
 hostname: lutece
+# $ arch => aarch64
+docker_apt_arch: arm64
 server_user:
   name: '{{ name }}'
   fullname: '{{ fullname }}'

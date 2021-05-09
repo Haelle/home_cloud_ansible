@@ -18,8 +18,11 @@
 - src: geerlingguy.pip
   version: 2.0.0
 - src: haelle.calibre_web_ansible
-  version: 1.5.0
+  version: 1.5.1
 - src: nginxinc.nginx
   version: 0.19.2
 - src: nginxinc.nginx_config
   version: 0.3.3
+  # forked from geerlingguy.certbot
+- src: haelle.certbot
+  version: 4.0.1

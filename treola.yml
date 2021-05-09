@@ -1,5 +1,12 @@
 ---
-# TODO creation from empty server
+# TODO: make a full reinstall to make it work properly
+# it needs the pre-task to create the user and disable the default one
+
+- name: Install shared configuration
+  import_playbook: shared_install.yml
+  vars:
+    runnig_hosts: vps-treola
+
 - hosts: vps-treola
   become: true
   remote_user: "{{ server_user.name }}"
@@ -9,19 +16,6 @@
     - ./secrets.yml
 
   roles:
-    - role: basic_setup
-      user: "{{ server_user }}"
-      tags: basic
-
-    - role: haelle.vimrc
-      become_user: "{{ server_user.name }}"
-      tags: vim
-
-    - role: haelle.oh_my_zsh
-      users:
-        - "{{ server_user.name }}"
-      tags: zsh
-
     - role: chloegaster.fr
       chloegaster:
         certbot_email: "{{ certbot_email }}"

@@ -1,6 +1,8 @@
 ---
 default_user: pi
 hostname: rothomagus
+# $ arch => armv7l
+docker_apt_arch: armhf
 server_user:
   name: pi
   fullname: Pi

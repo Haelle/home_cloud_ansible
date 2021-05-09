@@ -1,0 +1,29 @@
+---
+- hosts: "{{ runnig_hosts }}"
+  become: true
+  remote_user: "{{ server_user.name }}"
+  vars_files:
+    - ./secrets.yml
+
+  roles:
+    - role: basic_setup
+      user: "{{ server_user }}"
+      tags: basic
+
+    - role: haelle.vimrc
+      become_user: "{{ server_user.name }}"
+      tags: vim
+
+    - role: haelle.oh_my_zsh
+      users:
+        - "{{ server_user.name }}"
+      tags: zsh
+
+    - role: nginx
+      tags: nginx
+
+    - role: docker
+      vars:
+        docker_users:
+          - "{{ server_user.name }}"
+      tags: docker

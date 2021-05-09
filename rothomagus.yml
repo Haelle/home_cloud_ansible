@@ -1,5 +1,12 @@
 ---
 # TODO: make a full reinstall to make it work properly
+# it needs the pre-task to create the user and disable the default one
+
+- name: Install shared configuration
+  import_playbook: shared_install.yml
+  vars:
+    runnig_hosts: raspberry-rothomagus
+
 - hosts: raspberry-rothomagus
   remote_user: pi  # default password is 'raspberry'
   become: true
@@ -20,24 +27,15 @@
       - mount_point: /media/raspbian_2
         disk_label: Raspbian_2
 
-    - role: singleplatform-eng.users
-      users:
-        - username: pi
-          name: pi
-          groups: ['sudo', 'www-data']
-          password: "{{ pi_password }}"
-          ssh_key:
-            - "{{ ssh_key }}"
-      tags: users
-
-    - role: haelle.vimrc
-      become: false
-      tags: vim
-
-    - role: haelle.oh_my_zsh
-      users:
-        - pi
-      tags: zsh
+    #- role: singleplatform-eng.users
+      #users:
+        #- username: pi
+          #name: pi
+          #groups: ['sudo', 'www-data']
+          #password: "{{ pi_password }}"
+          #ssh_key:
+            #- "{{ ssh_key }}"
+      #tags: users
 
     - role: haelle.airsonic
       tags: airsonic
@@ -85,11 +83,6 @@
       nextcloud_db_pwd: "{{ nextcloud_db_password }}"
       nextcloud_hsts: "max-age=15768000; includeSubDomains; preload"
       tags: nextcloud
-
-    - role: docker
-      tags:
-        - docker
-        - booksonic
 
     - role: booksonic
       tags:
