@@ -1,0 +1,29 @@
+---
+- name: Create config directory
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: u=rwX,g=rX,o=rX
+  loop:
+    - "{{ etc_pi_hole }}"
+    - "{{ etc_dnsmasq_pi_hole }}"
+
+- name: Copy docker-compose
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ etc_pi_hole }}/docker-compose.yml"
+    mode: 0644
+
+- name: Disable native DNS resolver
+  systemd:
+    name: systemd-resolved
+    state: stopped
+    enabled: "no"
+
+- name: Create and start services
+  become_user: "{{ docker_user }}"
+  community.general.docker_compose:
+    project_src: "{{ etc_pi_hole }}"
+
+- name: Setup Nginx
+  include: nginx.yml

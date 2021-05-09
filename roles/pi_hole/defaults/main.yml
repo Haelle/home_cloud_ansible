@@ -1,0 +1,5 @@
+---
+etc_pi_hole: /etc/pihole
+etc_dnsmasq_pi_hole: /etc/dnsmasq.d
+pi_hole_http_port: 8001
+pi_hole_https_port: 4431

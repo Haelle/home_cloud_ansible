@@ -1,0 +1,29 @@
+---
+- name: Install nginx dependencies
+  apt:
+    pkg:
+      - php7.4-fpm
+      - php7.4-cgi
+      - php7.4-xml
+      - php7.4-sqlite3
+      - php7.4-intl
+      - apache2-utils
+    state: latest
+
+- name: Enable PHP fpm
+  service:
+    name: php7.4-fpm
+    enabled: 'yes'
+    state: started
+
+- name: Copy Nginx conf
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/sites-available/pi-hole.conf
+    mode: 0644
+
+- name: symlink to site enabled
+  file:
+    src: /etc/nginx/sites-available/pi-hole.conf
+    path: /etc/nginx/sites-enabled/pi-hole.conf
+    state: link
