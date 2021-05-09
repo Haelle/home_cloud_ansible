@@ -1,25 +1,31 @@
 ---
-# TODO: does this work ?
+# This role "successfully" install Docker/docker-compose for:
+# [X] Raspberry Pi 4 with Ubuntu 20.04
+# [ ] Raspberry Pi 3 with Raspbian X
 - name: Install dependencies
   apt:
     name:
+      - apt-transport-https
+      - ca-certificates
       - libffi-dev
       - libssl-dev
+      - software-properties-common
     state: present
 
-- include_role:
+- name: Install PIP
+  include_role:
     name: geerlingguy.pip
   vars:
     pip_install_packages:
       - name: docker
 
-- include_role:
+- name: Install Docker
+  include_role:
     name: geerlingguy.docker
   vars:
     docker_install_compose: true
-    docker_users:
-      - pi
 
 - name: Install docker-compose from pip3
   become: true
   shell: pip3 install docker-compose
+  # TODO: when not available ? armv7 & arm64 ?
