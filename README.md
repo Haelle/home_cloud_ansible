@@ -26,7 +26,7 @@ Reference this file in playbooks instead of `./secrets.yml`
 
 ```bash
 ansible-galaxy install -r requirements.yml
-ansible-playbook einstein.yml
+ansible-playbook rothomagus.yml
 ```
 
 ## Other
