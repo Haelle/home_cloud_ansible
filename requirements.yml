@@ -6,9 +6,9 @@
 - src: aalaesar.install_nextcloud
   version: v1.3.4
 - src: haelle.oh_my_zsh
-  version: 0.11.0
+  version: 1.0.3
 - src: haelle.vimrc
-  version: 0.6.0
+  version: 1.0.2
 - src: haelle.airsonic
   version: 0.3.0
 - src: geerlingguy.docker
