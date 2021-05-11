@@ -1,0 +1,18 @@
+---
+version: "2"
+
+services:
+  plex:
+    container_name: plex
+    build:
+      context: {{ plex_git }}
+      dockerfile: {{ plex_git }}/Dockerfile.arm64
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Paris
+      - PLEX_CLAIM={{ plex_claim }}
+    network_mode: host
+    volumes:
+      - {{ plex_database }}:/config
+      - {{ plex_transcode_temp_dir }}:/transcode
+      - {{ plex_medias }}:/data

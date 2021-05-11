@@ -1,12 +1,45 @@
 ---
-- name: Install Plex Media Server
-  include_tasks: install.yml
+- name: Set Git name
+  set_fact:
+    plex_git: "{{ plex_root }}/pms-docker"
 
-- name: Plex register directory state (is link?)
-  stat:
-    path: "/var/lib/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server"
-  register: plex_link
+- name: Create mandatory directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: u=rwX,g=rX,o=rX
+  loop:
+    - "{{ plex_root }}"
+    - "{{ plex_git }}"
+    - "{{ plex_database }}"
+    - "{{ plex_transcode_temp_dir }}"
+    - "{{ plex_medias }}"
 
-- name: Plex conf (when path exists and is not a symlink)
-  include: plex_data.yml
-  when: plex_link.stat.islnk is defined and plex_link.stat.islnk == False
+- name: Clone repository
+  git:
+    repo: https://github.com/plexinc/pms-docker.git
+    dest: "{{ plex_git }}"
+
+- name: Copy docker-compose
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ plex_git }}/docker-compose.yml"
+    mode: 0644
+    force: "yes"
+
+- name: Create and start services
+  become_user: "{{ docker_user }}"
+  community.general.docker_compose:
+    project_src: "{{ plex_git }}"
+
+- name: Copy Nginx conf
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/sites-available/plex.conf
+    mode: 0644
+
+- name: symlink to site enabled
+  file:
+    src: /etc/nginx/sites-available/plex.conf
+    path: /etc/nginx/sites-enabled/plex.conf
+    state: link
