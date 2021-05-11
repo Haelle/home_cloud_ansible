@@ -1,2 +1,5 @@
 ---
 open_dns_port: false
+config_system_locale: fr_FR.UTF-8
+config_system_language: fr_FR
+config_system_keymap: fr

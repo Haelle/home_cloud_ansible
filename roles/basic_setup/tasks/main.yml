@@ -11,6 +11,10 @@
   apt:
     update_cache: yes
 
+- name: Install & Update locale to FR
+  include: locale.yml
+  tags: locale
+
 - name: Install & Configure Uncomplicated Firewall (ufw)
   include: ufw.yml
   tags: ufw
