@@ -22,7 +22,6 @@
     - role: create_ssh_user
       users:
         - "{{ server_user }}"
-      tags: user
       when: not default_connection_failed
 
 - name: Install shared configuration

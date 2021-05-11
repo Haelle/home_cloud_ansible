@@ -7,6 +7,8 @@
   file:
     path: "{{ item }}"
     state: directory
+    owner: "{{ server_user.name }}"
+    group: "{{ server_user.name }}"
     mode: u=rwX,g=rX,o=rX
   loop:
     - "{{ plex_root }}"
@@ -28,7 +30,7 @@
     force: "yes"
 
 - name: Create and start services
-  become_user: "{{ docker_user }}"
+  become: "yes"
   community.general.docker_compose:
     project_src: "{{ plex_git }}"
 

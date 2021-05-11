@@ -1,8 +1,16 @@
 ---
+- name: Create the user group
+  group:
+    name: "{{ item.name }}"
+    state: present
+  with_items: "{{ users }}"
+
 - name: Create user (without password)
   user:
     name: "{{ item.name }}"
-    group: sudo
+    group: "{{ item.name }}"
+    groups:
+      - sudo
   with_items: "{{ users }}"
 
 - name: Set authorized key for users
