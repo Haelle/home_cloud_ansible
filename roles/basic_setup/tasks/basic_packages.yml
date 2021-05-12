@@ -27,6 +27,7 @@
       - putty
       - python3-tk
       - ruby
+      - rsync
       - snapd
       - software-properties-common
       - sqlite3
