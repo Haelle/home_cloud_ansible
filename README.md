@@ -51,6 +51,21 @@ sudo -u www-data php occ files:cleanup
 
 The second one is the most important, and tackle most of the problems
 
+### Plex claiming problems
+
+It Plex is on another server (especially inside de container) you may not be able to claim the server.
+Plex does not see the server as on the same network. Instead of trying to fix the network configuration let's make a tunnel.
+
+```shell
+ssh ip.address.of.server -L 8888:localhost:32400
+```
+
+And then go to `http://localhost:8888/web`, and claim it.
+
+P.S: make sure all other SSH connection are close, if not ssh *may* use them as shared connection and not creating the tunnel.
+
+[Source](https://support.plex.tv/articles/200288666-opening-plex-web-app/)
+
 ### Check piplening is enabled
 
 If in the log there is only ONE `SSH: EXEC ssh....` it's working if not there will be 3-5 occurences (https://stackoverflow.com/questions/43438519/check-if-ansible-pipelining-is-enabled-working) :

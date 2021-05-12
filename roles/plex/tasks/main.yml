@@ -22,6 +22,19 @@
     repo: https://github.com/plexinc/pms-docker.git
     dest: "{{ plex_git }}"
 
+- name: Getent get '{{ server_user.name }}' UID/GID
+  getent:
+    database: passwd
+    key: "{{ server_user.name }}"
+
+- name: get '{{ server_user.name }}' UID
+  set_fact:
+    plex_uid: "{{ getent_passwd[server_user.name].1 }}"
+
+- name: get '{{ server_user.name }}' GID
+  set_fact:
+    plex_gid: "{{ getent_passwd[server_user.name].2 }}"
+
 - name: Copy docker-compose
   template:
     src: docker-compose.yml.j2
