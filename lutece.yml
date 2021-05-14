@@ -56,25 +56,36 @@
       certbot_install_method: snap
       certbot_create_if_missing: 'yes'
       certbot_create_method: standalone
-        certbot_admin_email: "{{ certbot_email }}"
-        certbot_certs:
-          - domains:
-            - "trou-noir.alxs.fr"
-          - domains:
-            - "plex.alxs.fr"
+      certbot_admin_email: "{{ certbot_email }}"
+      certbot_certs:
+        - domains:
+          - "trou-noir.alxs.fr"
+        - domains:
+          - "plex.alxs.fr"
+        - domains:
+          - "download.alxs.fr"
       tags:
         - certbot
         - pi-hole
         - plex
+        - transmission
 
     - role: pi_hole
-        docker_user: "{{ server_user.name }}"
+      docker_user: "{{ server_user.name }}"
       tags: pi-hole
 
     - role: plex
-        plex_root: "{{ disk_mount_point }}/Plex"
-        plex_database: "{{ disk_mount_point }}/Plex/database"
-        plex_transcode_temp_dir: "{{ disk_mount_point }}/Plex/transcode"
-        plex_medias: "{{ disk_mount_point }}/medias"
-        docker_user: "{{ server_user.name }}"
+      plex_root: "{{ disk_mount_point }}/Plex"
+      plex_database: "{{ disk_mount_point }}/Plex/database"
+      plex_transcode_temp_dir: "{{ disk_mount_point }}/Plex/transcode"
+      plex_medias: "{{ disk_mount_point }}/medias"
+      docker_user: "{{ server_user.name }}"
       tags: plex
+
+    - role: transmission
+      docker_user: '{{ server_user.name }}'
+      transmission_data: '{{ disk_mount_point }}/medias'
+      transmission_directory: '{{ disk_mount_point }}/medias/transmission-home'
+      transmission_rpc_login: '{{ transmission_login }}'
+      transmission_rpc_password: '{{ transmission_password}}'
+      tags: transmission

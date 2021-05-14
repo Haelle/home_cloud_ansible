@@ -1,0 +1,46 @@
+---
+version: '2'
+
+services:
+  transmission:
+    container_name: transmission
+    image: haugene/transmission-openvpn
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    restart: always
+    ports:
+      - "9091:9091"
+      - "8888:8888"
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - {{ transmission_data }}:/data
+    environment:
+      - TZ=Europe/Paris
+      - OPENVPN_PROVIDER=PROTONVPN
+      - OPENVPN_CONFIG={{ proton_vpn_server }}
+      - OPENVPN_USERNAME={{ proton_vpn_login }}
+      - OPENVPN_PASSWORD={{ proton_vpn_password }}
+      - OPENVPN_OPTS=--inactive 3600 --ping 10 --ping-exit 60
+      - LOCAL_NETWORK=192.168.1.2/24
+      - CREATE_TUN_DEVICE=true
+      - HEALTH_CHECK_HOST=duckduckgo.com
+      - PUID={{ transmission_uid }}
+      - PGID={{ transmission_gid }}
+      - TRANSMISSION_RPC_USERNAME={{ transmission_rpc_login }}
+      - TRANSMISSION_RPC_PASSWORD={{ transmission_rpc_password }}
+      - TRANSMISSION_RPC_AUTHENTICATION_REQUIRED=true
+
+  proxy:
+    container_name: transmission_proxy
+    image: haugene/transmission-openvpn-proxy
+    links:
+      - transmission
+    ports:
+      - 8080:8080
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
