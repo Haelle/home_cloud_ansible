@@ -35,7 +35,7 @@ ansible-playbook rothomagus.yml
 See all ansible variables for a host
 
 ```bash
-ansible u- pi -m setup <hostname>
+ansible -u pi -m setup <hostname>
 ```
 
 ### Nextcloud sync problems

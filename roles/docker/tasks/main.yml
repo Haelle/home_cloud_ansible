@@ -28,4 +28,17 @@
 - name: Install docker-compose from pip3
   become: true
   shell: pip3 install docker-compose
-  # TODO: when not available ? armv7 & arm64 ?
+  when: # Raspberry Pi 3 with Debian Stretch
+    - ansible_architecture == "armv7l"
+    - ansible_distribution == "Debian"
+    - ansible_distribution_version == "9"
+
+- name: Install docker-compose from apt
+  apt:
+    name:
+      - docker-compose
+    state: present
+  when: # Raspberry Pi 4 with Ubuntu Focal
+    - ansible_architecture == "aarch64"
+    - ansible_distribution == "Ubuntu"
+    - ansible_distribution_version == "20.04"
