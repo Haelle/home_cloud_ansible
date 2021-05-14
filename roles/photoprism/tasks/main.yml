@@ -1,0 +1,50 @@
+---
+- name: Create config directory
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ server_user.name }}"
+    group: "{{ server_user.group }}"
+    mode: u=rwX,g=rX,o=rX
+  loop:
+    - "{{ photoprism_directory }}"
+    - "{{ photoprism_directory }}/storage"
+    - "{{ photoprism_directory }}/database"
+
+- name: Getent get '{{ server_user.name }}' UID/GID
+  getent:
+    database: passwd
+    key: "{{ server_user.name }}"
+
+- name: get '{{ server_user.name }}' UID
+  set_fact:
+    photoprism_uid: "{{ getent_passwd[server_user.name].1 }}"
+
+- name: get '{{ server_user.name }}' GID
+  set_fact:
+    photoprism_gid: "{{ getent_passwd[server_user.name].2 }}"
+
+- name: Copy docker-compose
+  template:
+    src: docker-compose.yml.j2
+    owner: "{{ server_user.name }}"
+    group: "{{ server_user.group }}"
+    dest: "{{ photoprism_directory }}/docker-compose.yml"
+    mode: 0644
+
+- name: Create and start services
+  become_user: "{{ docker_user }}"
+  community.general.docker_compose:
+    project_src: "{{ photoprism_directory }}"
+
+- name: Copy Nginx conf
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/sites-available/photoprism.conf
+    mode: 0644
+
+- name: symlink to site enabled
+  file:
+    src: /etc/nginx/sites-available/photoprism.conf
+    path: /etc/nginx/sites-enabled/photoprism.conf
+    state: link

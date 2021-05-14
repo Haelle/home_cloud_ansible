@@ -64,11 +64,14 @@
           - "plex.alxs.fr"
         - domains:
           - "download.alxs.fr"
+        - domains:
+          - "photo.alxs.fr"
       tags:
         - certbot
         - pi-hole
         - plex
         - transmission
+        - photoprism
 
     - role: pi_hole
       docker_user: "{{ server_user.name }}"
@@ -89,3 +92,11 @@
       transmission_rpc_login: '{{ transmission_login }}'
       transmission_rpc_password: '{{ transmission_password}}'
       tags: transmission
+
+    - role: photoprism
+      docker_user: '{{ server_user.name }}'
+      photoprism_directory: "{{ disk_mount_point }}/photoprism"
+      photoprism_data: "{{ disk_mount_point }}/Nextcloud/Photos"
+      photoprism_admin_password: "{{ photoprism_password }}"
+      photoprism_mariadb_password: "{{ photoprism_db_password }}"
+      tags: photoprism

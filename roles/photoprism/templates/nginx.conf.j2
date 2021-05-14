@@ -1,0 +1,42 @@
+server {
+  listen 443 ssl;
+
+  server_name photo.alxs.fr;
+
+  # Enable HSTS (https://developer.mozilla.org/en-US/docs/Security/HTTP_Strict_Transport_Security)
+  add_header                Strict-Transport-Security "max-age=172800; includeSubdomains";
+
+  client_max_body_size      500M;                                           # Bump the max body size, you may want to upload huge stuff via the upload GUI
+  proxy_buffering           off;                                            # Do not hold back the request while the client sends data, give the stream directly to PP
+
+  location / {
+    proxy_pass              http://127.0.0.1:2342;
+
+    proxy_http_version      1.1;                                             # Required for WebSocket connection
+
+    proxy_set_header        X-Real-IP         $remote_addr;                  # Let PP know the clients real IP
+    proxy_set_header        X-Forwarded-For   $proxy_add_x_forwarded_for;    # Let PP know that a proxy did forward this request
+    proxy_set_header        Host              $http_host;                    # Set Proxy host info
+    proxy_set_header        Upgrade           $http_upgrade;                 # Allow protocol switch to websocket
+    proxy_set_header        Connection        "upgrade";                     # Do protocol switch
+    proxy_set_header        X-Forwarded-Proto $scheme;                       # Let PP know that this connection used HTTP or HTTPS
+
+    proxy_redirect          off;
+  }
+
+  ssl_certificate /etc/letsencrypt/live/photo.alxs.fr/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/photo.alxs.fr/privkey.pem;
+}
+
+server {
+  listen 80;
+  listen [::]:80;
+
+  server_name photo.alxs.fr;
+
+  if ($host = photo.alxs.fr) {
+    return 301 https://$host$request_uri;
+  }
+
+  return 404;
+}
