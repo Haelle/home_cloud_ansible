@@ -5,6 +5,7 @@ hostname: treola
 docker_apt_arch: amd64
 server_user:
   name: '{{ name }}'
+  group: '{{ group }}'
   fullname: '{{ fullname }}'
   email: '{{ email }}'
   ssh_key: '{{ ssh_key }}'

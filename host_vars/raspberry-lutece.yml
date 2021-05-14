@@ -5,6 +5,7 @@ hostname: lutece
 docker_apt_arch: arm64
 server_user:
   name: '{{ name }}'
+  group: '{{ group }}'
   fullname: '{{ fullname }}'
   email: '{{ email }}'
   ssh_key: '{{ ssh_key }}'

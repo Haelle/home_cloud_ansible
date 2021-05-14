@@ -53,10 +53,9 @@
       tags: nextcloud
 
     - role: haelle.certbot
-      vars:
-        certbot_install_method: snap
-        certbot_create_if_missing: 'yes'
-        certbot_create_method: standalone
+      certbot_install_method: snap
+      certbot_create_if_missing: 'yes'
+      certbot_create_method: standalone
         certbot_admin_email: "{{ certbot_email }}"
         certbot_certs:
           - domains:
@@ -69,12 +68,10 @@
         - plex
 
     - role: pi_hole
-      vars:
         docker_user: "{{ server_user.name }}"
       tags: pi-hole
 
     - role: plex
-      vars:
         plex_root: "{{ disk_mount_point }}/Plex"
         plex_database: "{{ disk_mount_point }}/Plex/database"
         plex_transcode_temp_dir: "{{ disk_mount_point }}/Plex/transcode"

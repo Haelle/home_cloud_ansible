@@ -5,6 +5,7 @@ hostname: rothomagus
 docker_apt_arch: armhf
 server_user:
   name: pi
+  group: pi
   fullname: Pi
   email: '{{ email }}'
   ssh_key: '{{ ssh_key }}'
