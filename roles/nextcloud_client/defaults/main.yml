@@ -1,0 +1,4 @@
+---
+nextcloud_server_url: https://cloud.alxs.fr
+nextcloud_log_folder: /var/log/nextcloud_client
+nextcloud_sync_cmd: "nextcloudcmd -u {{ nextcloud_login }} -p '{{ nextcloud_password }}' --unsyncedfolders {{ nextcloud_excluded_directories_path }} {{ nextcloud_folder }} {{ nextcloud_server_url }} >> {{ nextcloud_log_folder}}/sync.log 2>&1"

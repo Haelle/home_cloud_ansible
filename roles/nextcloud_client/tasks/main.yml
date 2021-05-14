@@ -1,0 +1,47 @@
+---
+- name: Add Nextcloud-client repository
+  become: 'yes'
+  shell: add-apt-repository --yes ppa:nextcloud-devs/client
+
+  # for unknown reason this does not work ; errors:
+  # "Warning: apt-key output should not be parsed (stdout is not a terminal)",
+  # "gpg: keyserver receive failed: No such file or directory"
+  #apt_repository:
+    #repo: ppa:nextcloud-devs/client
+    #state: present
+
+- name: Install Nextcloud-client
+  package:
+    name: nextcloud-client
+    state: present
+
+- name: Copy excluded directories
+  template:
+    src: excluded_directories.j2
+    dest: '{{ nextcloud_excluded_directories_path }}'
+  become_user: '{{ nextcloud_user }}'
+
+- name: Create Nextcloud directory
+  become_user: '{{ nextcloud_user }}'
+  file:
+    path: '{{ nextcloud_folder }}'
+    state: directory
+    mode: '0755'
+    owner: '{{ nextcloud_user }}'
+    group: '{{ nextcloud_group }}'
+
+- name: Create log directory
+  file:
+    path: '{{ nextcloud_log_folder }}'
+    state: directory
+    mode: '0755'
+    owner: '{{ nextcloud_user }}'
+    group: '{{ nextcloud_group }}'
+
+- name: Sync every days
+  cron:
+    name: Sync Nextcloud
+    special_time: daily
+    user: '{{ nextcloud_user }}'
+    job: '{{ nextcloud_sync_cmd }}'
+  become_user: '{{ nextcloud_user }}'
