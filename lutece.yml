@@ -44,6 +44,14 @@
         - mount_point: "{{ disk_mount_point }}"
           disk_label: Lutece_1
 
+    - role: nextcloud_client
+      nextcloud_user: '{{ server_user.name }}'
+      nextcloud_group: '{{ server_user.group }}'
+      nextcloud_folder: '{{ disk_mount_point }}/Nextcloud'
+      nextcloud_excluded_directories_path: '{{ disk_mount_point }}/.nextcloud_excluded_directories'
+      nextcloud_excluded_directories: []
+      tags: nextcloud
+
     - role: haelle.certbot
       vars:
         certbot_install_method: snap

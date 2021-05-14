@@ -22,6 +22,16 @@
         fqdn: chloegaster.fr
       tags: chloegaster
 
+    - role: nextcloud_client
+      nextcloud_user: '{{ server_user.name }}'
+      nextcloud_group: '{{ server_user.group }}'
+      nextcloud_folder: ~/Nextcloud
+      nextcloud_excluded_directories_path: ~/.nextcloud_excluded_directories
+      nextcloud_excluded_directories:
+        - 'Images'
+        - 'Photos'
+      tags: nextcloud
+
     - role: haelle.calibre_web_ansible
       calibre_web:
         name: alexandrie
