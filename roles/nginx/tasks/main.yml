@@ -27,15 +27,15 @@
     name: nginxinc.nginx_config
   vars:
     nginx_config_debug_output: true
-
-    nginx_config_cleanup: true
-    nginx_config_cleanup_paths:
-      - directory:
-          - /etc/nginx/conf.d
-        recurse: false
-    nginx_config_cleanup_files:
-      - /etc/nginx/conf.d/default.conf
+    nginx_config_cleanup: false
     # TODO: check if this module is needed,
     # it doesn't seems to be available on arm64
     #nginx_config_modules:
       #- modules/ngx_http_js_module.so
+
+- name: Enable ngx_http_limit_req_module
+  copy:
+    src: rate_limiting.conf
+    dest: /etc/nginx/conf.d/rate_limiting.conf
+  notify: restart nginx
+  tags: oki
