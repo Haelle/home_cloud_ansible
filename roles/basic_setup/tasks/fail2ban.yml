@@ -1,0 +1,17 @@
+---
+- name: Install fail2ban
+  apt:
+    name: fail2ban
+    state: latest
+
+- name: Deploy fail2ban configuration
+  copy:
+    src: jail.local
+    dest: /etc/fail2ban/jail.local
+  notify: restart fail2ban
+
+- name: Deploy fail2ban filter
+  copy:
+    src: filter.d/nginx-http-dos.conf
+    dest: /etc/fail2ban/filter.d/nginx-http-dos.conf
+  notify: restart fail2ban

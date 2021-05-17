@@ -36,6 +36,10 @@
   include: tmux_setup.yml
   tags: tmux
 
+- name: Install & configure fail2ban
+  include: fail2ban.yml
+  tags: fail2ban
+
 - name: Install lolcat
   community.general.gem:
     name: lolcat

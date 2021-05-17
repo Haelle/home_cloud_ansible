@@ -7,7 +7,6 @@
       - colordiff
       - cowsay
       - curl
-      - fail2ban
       - finger
       - htop
       - jq
