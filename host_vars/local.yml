@@ -1,0 +1,9 @@
+---
+hostname: esteban
+docker_apt_arch: x86_64
+server_user:
+  name: '{{ name }}'
+  group: '{{ group }}'
+  fullname: '{{ fullname }}'
+  email: '{{ email }}'
+  ssh_key: '{{ ssh_key }}'

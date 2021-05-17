@@ -1,2 +1,49 @@
 ---
-# TODO
+# TODO/WIP
+- hosts: local
+  remote_user: "{{ server_user.name }}"
+  vars_files:
+    - ./secrets.yml
+
+  pre_tasks:
+    - name: Add Ansible Apt repository
+      apt_repository:
+        repo: ppa:ansible/ansible
+        state: present
+
+    - name: Upgrade Ansible
+      apt:
+        name: ansible
+        state: latest
+        update_cache: 'yes'
+
+  # Install desktop packages
+  # check docker installation for x86_64
+  # ruby
+  # nodejs
+  # redis
+  # python
+  # ^ all in docker ? why not
+
+  # Need to add default conf in ~/.ssh/config
+  #Host *
+  #ServerAliveInterval 100
+  #ServerAliveCountMax 2
+  #ForwardAgent yes
+  #UserKnownHostsFile ~/.ssh/known_hosts
+  #IdentityFile ~/.ssh/id_rsa
+##  StrictHostKeyChecking no
+
+
+# Gnome plugins:
+#  Alt Tab Workspace: https://extensions.gnome.org/extension/310/alt-tab-workspace/
+#  Dash to Dock: https://micheleg.github.io/dash-to-dock/
+#  system-monitor: https://github.com/paradoxxxzero/gnome-shell-system-monitor-applet
+#  Pomodoro : https://github.com/codito/gnome-pomodoro/
+#  Docker : https://extensions.gnome.org/extension/1065/docker-status/
+#  Docker : https://extensions.gnome.org/extension/2224/easy-docker-containers/ (Gnome trop récent demandé)
+- name: Install shared configuration
+  import_playbook: shared_install.yml
+  vars:
+    runnig_hosts: local
+
