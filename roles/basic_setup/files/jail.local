@@ -1,3 +1,9 @@
+[sshd]
+maxretry = 3
+
+[sshd-ddos]
+enabled = true
+
 [nginx-http-auth]
 enabled = true
 
