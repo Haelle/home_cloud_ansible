@@ -1,6 +1,4 @@
 ---
-- src: elboletaire.transmission
-  version: 2.0.1
 - src: aalaesar.install_nextcloud
   version: v1.3.4
 - src: haelle.oh_my_zsh
@@ -23,4 +21,4 @@
   version: 0.3.3
   # forked from geerlingguy.certbot
 - src: haelle.certbot
-  version: 4.0.1
+  version: 4.0.3

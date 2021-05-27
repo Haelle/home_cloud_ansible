@@ -1,0 +1,12 @@
+Tmux config ?
+Git configure signature !
+renome name en login (virer warning)
+Nginx migrate to :
+  - deploy HTTPS ready configuration (airsonic for instance)
+  - share a config for reverse proxy
+  - options-ssl-nginx.conf file should not exist but config is worth it !
+    sur Calibre aussi et Chloegaster et voir pour le reste !
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+pi hole bloque YouTube et Twitter
+créer un Swap sur les raspberry !!
