@@ -14,3 +14,10 @@
 - name: Disallow password login
   include: disallow_ssh.yml
   tags: ssh
+
+- name: Configure Logrotate for Nextcloud server
+  template:
+    src: logrotate_nextcloud_server.j2
+    dest: /etc/logrotate.d/nextcloud_server
+    mode: '0644'
+  tags: logrotate

@@ -46,3 +46,10 @@
     src: /etc/nginx/sites-available/transmission.conf
     path: /etc/nginx/sites-enabled/transmission.conf
     state: link
+
+- name: Configure Logrotate for Transmission
+  template:
+    src: logrotate.j2
+    dest: /etc/logrotate.d/transmission
+    mode: '0644'
+  tags: logrotate

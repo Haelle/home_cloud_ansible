@@ -45,3 +45,10 @@
     user: '{{ nextcloud_user }}'
     job: '{{ nextcloud_sync_cmd }}'
   become_user: '{{ nextcloud_user }}'
+
+- name: Configure Logrotate for Nextcloud client
+  template:
+    src: logrotate.j2
+    dest: /etc/logrotate.d/nextcloud_client
+    mode: '0644'
+  tags: logrotate

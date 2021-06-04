@@ -14,7 +14,7 @@
 - src: geerlingguy.pip
   version: 2.0.0
 - src: haelle.calibre_web_ansible
-  version: 1.5.1
+  version: 1.6.1
 - src: nginxinc.nginx
   version: 0.19.2
 - src: nginxinc.nginx_config
