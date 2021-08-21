@@ -33,6 +33,7 @@
     - role: php
       tags: nextcloud
 
+      # Make PHP version a var (and test it)
     - role: aalaesar.install_nextcloud
       php_version: "7.3"
       php_custom: 'yes'

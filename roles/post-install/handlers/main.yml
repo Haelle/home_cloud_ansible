@@ -10,4 +10,11 @@
     state: restarted
 
 - name: Restart ssh
-  service: name=ssh state=restarted
+  service:
+    name: ssh
+    state: restarted
+
+- name: restart php
+  service:
+    name: php7.3-fpm
+    state: restarted

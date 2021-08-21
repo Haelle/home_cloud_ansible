@@ -11,3 +11,37 @@
     - nextcloud
     - nextcloud-frame-options
   notify: reload nginx
+
+- name: Install SVG dependency
+  apt:
+    name: libmagickcore-6.q16-3-extra
+    state: present
+
+# WARNING it depends on rothomagus.yml php_version
+- name: Remove PHP memory limit (cli)
+  lineinfile:
+    path: /etc/php/7.3/cli/php.ini
+    regexp: '^memory_limit'
+    line: 'memory_limit = -1'
+  notify: reload php
+
+- name: Remove PHP memory limit (fpm)
+  lineinfile:
+    path: /etc/php/7.3/fpm/php.ini
+    regexp: '^memory_limit'
+    line: 'memory_limit = -1'
+  notify: reload php
+
+- name: Enable PHP APCU (cli)
+  lineinfile:
+    path: /etc/php/7.3/cli/php.ini
+    line: 'apc.enable_cli = 1'
+    insertafter: EOF
+  notify: reload php
+
+- name: Enable PHP APCU (fpm)
+  lineinfile:
+    path: /etc/php/7.3/fpm/php.ini
+    line: 'apc.enable_cli = 1'
+    insertafter: EOF
+  notify: reload php
