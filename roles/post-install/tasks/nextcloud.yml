@@ -45,3 +45,17 @@
     line: 'apc.enable_cli = 1'
     insertafter: EOF
   notify: reload php
+
+- name: Use system env variables (fpm)
+  lineinfile:
+    path: "/etc/php/{{ php_version }}/fpm/pool.d/www.conf"
+    regexp: ';clear_env = no'
+    line: 'clear_env = no'
+  notify: reload php
+
+- name: Add default_phone_region to nextcloud config
+  lineinfile:
+    path: "/opt/nextcloud/config/config.php"
+    line: "'default_phone_region' => 'FR',"
+    insertbefore: '^maintenance'
+  notifiy: reload php
