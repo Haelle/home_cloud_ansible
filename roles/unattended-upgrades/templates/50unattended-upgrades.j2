@@ -1,0 +1,17 @@
+Unattended-Upgrade::Automatic-Reboot "true";
+Unattended-Upgrade::Automatic-Reboot-Time "03:00";
+
+Unattended-Upgrade::Mail "cloud@alxs.fr";
+Unattended-Upgrade::MailOnlyOnError "false";
+
+Unattended-Upgrade::Allowed-Origins {
+        "${distro_id} ${distro_codename}-security";
+//      "${distro_id} ${distro_codename}-updates";
+};
+
+Unattended-Upgrade::Package-Blacklist{
+{% for package in security_autoupdate_blacklist %}
+      "{{package}}";
+{% endfor %}
+}
+

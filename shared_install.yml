@@ -28,3 +28,8 @@
         docker_users:
           - "{{ server_user.name }}"
       tags: docker
+
+    - role: unattended-upgrades
+      tags:
+        - unattended-upgrades
+        - security
