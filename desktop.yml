@@ -42,6 +42,7 @@
 #  Pomodoro : https://github.com/codito/gnome-pomodoro/
 #  Docker : https://extensions.gnome.org/extension/1065/docker-status/
 #  Docker : https://extensions.gnome.org/extension/2224/easy-docker-containers/ (Gnome trop récent demandé)
+#  Emoji selector : https://github.com/maoschanz/emoji-selector-for-gnome
 - name: Install shared configuration
   import_playbook: shared_install.yml
   vars:
