@@ -8,7 +8,7 @@
 - src: haelle.airsonic
   version: 0.3.0
 - src: geerlingguy.docker
-  version: 2.9.0
+  version: 4.1.3
 # not sure if is useful
 # currently not used but maybe needed for docker to work
 - src: geerlingguy.pip

@@ -9,3 +9,4 @@ server_user:
   fullname: '{{ fullname }}'
   email: '{{ email }}'
   ssh_key: '{{ ssh_key }}'
+docker_compose_url: https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-linux-armv7
