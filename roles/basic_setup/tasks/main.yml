@@ -11,6 +11,11 @@
   apt:
     update_cache: yes
 
+- name: Set timezone to Europe/Paris
+  timezone:
+    name: Europe/Paris
+  tags: timezone
+
 - name: Install & Update locale to FR
   include: locale.yml
   tags: locale
