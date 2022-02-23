@@ -1,0 +1,93 @@
+---
+- name: Clone the repository
+  become_user: "{{ server_user.name }}"
+  git:
+    repo: https://github.com/LibrePhotos/librephotos-docker.git
+    dest: "{{ librephotos_directory }}"
+
+- name: Give the main container a name
+  lineinfile:
+    path: "{{ librephotos_directory }}/docker-compose.yml"
+    line: '    container_name: librephotos'
+    state: present
+    insertafter: 'image: reallibrephotos/librephotos-proxy'
+
+- name: Give the db container a name
+  lineinfile:
+    path: "{{ librephotos_directory }}/docker-compose.yml"
+    line: '    container_name: librephotos-pg'
+    state: present
+    insertafter: 'image: postgres'
+
+- name: Give the frontend container a name
+  lineinfile:
+    path: "{{ librephotos_directory }}/docker-compose.yml"
+    line: '    container_name: librephotos-frontend'
+    state: present
+    insertafter: 'image: reallibrephotos/librephotos-frontend'
+
+- name: Give the backend container a name
+  lineinfile:
+    path: "{{ librephotos_directory }}/docker-compose.yml"
+    line: '    container_name: librephotos-backend'
+    state: present
+    insertafter: 'image: reallibrephotos/librephotos'
+
+- name: Give the redis container a name
+  lineinfile:
+    path: "{{ librephotos_directory }}/docker-compose.yml"
+    line: '    container_name: librephotos-redis'
+    state: present
+    insertafter: 'image: redis'
+
+- name: Create librephotos directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ server_user.name }}"
+    group: "{{ server_user.group }}"
+    mode: u=rwX,g=rX,o=rX
+  loop:
+    - "{{ librephotos_log_directory }}"
+    - "{{ librephotos_media }}"
+    - "{{ librephotos_cache }}"
+    - "{{ librephotos_database }}"
+
+  # this version of docker-compose requires docker-compose 2+
+  # and thus requires a specific docker-compose version see :
+  # host_vars/raspberry-lutece.yml
+- name: Copy docker-compose env vars
+  template:
+    src: librephotos.env.j2
+    owner: "{{ server_user.name }}"
+    group: "{{ server_user.group }}"
+    dest: "{{ librephotos_directory }}/.env"
+    mode: 0644
+
+  # do not use community docker it does not support docker-compose 2+
+- name: Create and start services
+  become_user: "{{ docker_user }}"
+  shell:
+    chdir: "{{ librephotos_directory }}"
+    cmd: docker-compose up -d
+
+- name: Copy Nginx conf
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/sites-available/librephotos.conf
+    mode: 0644
+  notify: reload nginx
+
+- name: symlink to site enabled
+  file:
+    src: /etc/nginx/sites-available/librephotos.conf
+    path: /etc/nginx/sites-enabled/librephotos.conf
+    state: link
+  notify: reload nginx
+
+- name: Auto scan folder with cron
+  cron:
+    name: LibrePhotos Scan
+    special_time: daily
+    user: "{{ docker_user }}"
+    job: "{{ librephotos_scan_command }}"
