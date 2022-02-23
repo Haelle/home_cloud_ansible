@@ -1,7 +1,9 @@
 ---
 - name: Install unattended upgrades package.
-  package:
-    name: unattended-upgrades
+  apt:
+    pkg:
+      - unattended-upgrades
+      - mailutils
     state: present
 
 - name: Copy unattended-upgrades configuration files in place.
