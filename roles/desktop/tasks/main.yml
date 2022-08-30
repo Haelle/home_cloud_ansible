@@ -29,6 +29,13 @@
     - keepass
     - keepass-xc
 
+- name: Add UnityHub official repository
+  apt_repository:
+    repo: deb https://hub.unity3d.com/linux/repos/deb stable main
+    state: present
+    update_cache: "yes"
+  tags: unity
+
 - name: Add Nemo Seahorse repository
   apt_repository:
     repo: ppa:wasta-linux/cinnamon-testing
@@ -60,6 +67,7 @@
     - nemo
     - nemo-nextcloud
     - nemo-seahorse
+    - unityhub
 
 - name: Passwordless users
   lineinfile:
