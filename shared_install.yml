@@ -7,6 +7,9 @@
     - ./secrets.yml
 
   roles:
+    - role: server_setup
+      tags: basic
+
     - role: basic_setup
       user: "{{ server_user }}"
       tags: basic

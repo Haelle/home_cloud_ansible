@@ -1,16 +1,20 @@
 ---
-- hosts: local
+- hosts: localhost
+  connection: local
+  become: "yes"
   remote_user: "{{ server_user.name }}"
   vars_files:
     - ./secrets.yml
 
   pre_tasks:
     - name: Passwordless users
+      become: "yes"
       lineinfile:
         path: /etc/sudoers
         regexp: '\%sudo.+ALL=\(ALL:ALL\).+ALL'
         line: "%sudo ALL=(ALL:ALL) NOPASSWD: ALL"
         state: present
+      tags: sudoer
 
   roles:
     - role: basic_setup
@@ -28,6 +32,7 @@
 
     - role: desktop
       tags: desktop
+
   # Install desktop packages
   # check docker installation for x86_64
   # ruby
@@ -44,8 +49,3 @@
 #  Docker : https://extensions.gnome.org/extension/1065/docker-status/
 #  Docker : https://extensions.gnome.org/extension/2224/easy-docker-containers/ (Gnome trop récent demandé)
 #  Emoji selector : https://github.com/maoschanz/emoji-selector-for-gnome
-- name: Install shared configuration
-  import_playbook: shared_install.yml
-  vars:
-    runnig_hosts: local
-

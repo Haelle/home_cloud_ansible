@@ -2,8 +2,19 @@
 - name: Install desktop packages
   apt:
     pkg:
+      - cowsay
+      - curl
       - docker
       - direnv
+      - finger
+      - htop
+      - magic-wormhole
+      - mmv
+      - mosh
+      - snapd
+      - telnet
+      - tree
+      - whois
     state: latest
 
 - name: SSH default config

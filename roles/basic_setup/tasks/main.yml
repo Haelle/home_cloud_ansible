@@ -1,36 +1,4 @@
 ---
-- name: Rename server
-  include: hostname.yml
-
-- name: Ensure Apitude is installed
-  apt:
-    name: aptitude
-    state: present
-
-- name: Apitude Update
-  apt:
-    update_cache: yes
-
-- name: Set timezone to Europe/Paris
-  timezone:
-    name: Europe/Paris
-  tags: timezone
-
-# What is the use of this ? locale in console ?
-# is it really working ?
-#- name: Install & Update locale to FR
-#  include: locale.yml
-#  tags: locale
-
-- name: Install & Configure Uncomplicated Firewall (ufw)
-  include: ufw.yml
-  tags:
-    - ufw
-    - security
-
-- name: Install basic packages
-  include: basic_packages.yml
-
 - name: Install & configure Ag SilverSearch
   include: ag_setup.yml
   tags:
@@ -45,11 +13,9 @@
   include: tmux_setup.yml
   tags: tmux
 
-- name: Install & configure fail2ban
-  include: fail2ban.yml
-  tags:
-    - fail2ban
-    - security
+- name: Install Ruby for lolcat
+  apt:
+    pkg: ruby
 
 - name: Install lolcat
   community.general.gem:

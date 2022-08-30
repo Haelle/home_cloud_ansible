@@ -9,5 +9,5 @@
 - name: Copy gitignore file
   template:
     src: ./gitconfig.j2
-    dest: ~/.gitconfig
+    dest: /home/{{ server_user.name}}/.gitconfig
     mode: '0644'
