@@ -1,5 +1,5 @@
 ---
-hostname: esteban
+hostname: esteban-LDLC
 docker_apt_arch: x86_64
 server_user:
   name: '{{ name }}'

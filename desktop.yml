@@ -1,5 +1,4 @@
 ---
-# TODO/WIP
 - hosts: local
   remote_user: "{{ server_user.name }}"
   vars_files:
@@ -17,6 +16,22 @@
         state: latest
         update_cache: 'yes'
 
+  roles:
+    - role: basic_setup
+      user: "{{ server_user }}"
+      tags: basic
+
+    - role: haelle.vimrc
+      become_user: "{{ server_user.name }}"
+      tags: vim
+
+    - role: haelle.oh_my_zsh
+      users:
+        - "{{ server_user.name }}"
+      tags: zsh
+
+    - role: desktop
+      tags: desktop
   # Install desktop packages
   # check docker installation for x86_64
   # ruby
@@ -24,16 +39,6 @@
   # redis
   # python
   # ^ all in docker ? why not
-
-  # Need to add default conf in ~/.ssh/config
-  #Host *
-  #ServerAliveInterval 100
-  #ServerAliveCountMax 2
-  #ForwardAgent yes
-  #UserKnownHostsFile ~/.ssh/known_hosts
-  #IdentityFile ~/.ssh/id_rsa
-##  StrictHostKeyChecking no
-
 
 # Gnome plugins:
 #  Alt Tab Workspace: https://extensions.gnome.org/extension/310/alt-tab-workspace/

@@ -1,0 +1,110 @@
+---
+- name: Install desktop packages
+  apt:
+    pkg:
+      - docker
+      - direnv
+    state: latest
+
+- name: SSH default config
+  blockinfile:
+    path: "/home/{{ server_user.name }}/.ssh/config"
+    block: |
+      Host *
+      ServerAliveInterval 100
+      ServerAliveCountMax 2
+      ForwardAgent yes
+      UserKnownHostsFile ~/.ssh/known_hosts
+      IdentityFile ~/.ssh/id_rsa
+      #StrictHostKeyChecking no
+    insertbefore: EOF
+    marker: "# {mark} ANSIBLE BLOCK: ssh config"
+
+- name: Add KeepassXC official repository
+  apt_repository:
+    repo: ppa:phoerious/keepassxc
+    state: present
+    update_cache: "yes"
+  tags:
+    - keepass
+    - keepass-xc
+
+- name: Add Nemo Seahorse repository
+  apt_repository:
+    repo: ppa:wasta-linux/cinnamon-testing
+    state: present
+    update_cache: "yes"
+
+- name: install desktop packages
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:
+    - keepassxc
+    - calibre
+    - vlc
+    - steam
+    - gimp
+    - gnome-tweak-tool
+    - exfat-fuse
+    - exfat-utils
+    - meld
+    - variety
+    - gnome-shell-pomodoro
+    - xournal
+    - chrome-gnome-shell
+    - ghostwriter
+    - nautilus-nextcloud
+    - seahorse-nautilus
+    - nemo
+    - nemo-nextcloud
+    - nemo-seahorse
+
+- name: Passwordless users
+  lineinfile:
+    path: /etc/sudoers
+    regexp: '\%sudo.+ALL=\(ALL:ALL\).+ALL'
+    line: "%sudo ALL=(ALL:ALL) NOPASSWD: ALL"
+    state: present
+
+- name: PyCharm
+  snap:
+    name: pycharm-community
+    classic: "yes"
+  tags: pycharm
+
+- name: Rider
+  snap:
+    name: rider
+    classic: "yes"
+    channel: "2019.2/stable"
+  tags: rider
+
+- name: Slack
+  snap:
+    name: slack
+    classic: "yes"
+  tags: slack
+
+- name: Skype
+  snap:
+    name: skype
+    classic: "yes"
+  tags: skype
+
+- name: Insomnia
+  snap:
+    name: insomnia
+    classic: "yes"
+  tags: insomnia
+
+- name: GitKraken
+  snap:
+    name: gitkraken
+    classic: "yes"
+  tags: gitkraken
+
+- name: VLC
+  command: sudo snap install vlc --classic
+  tags: vlc
