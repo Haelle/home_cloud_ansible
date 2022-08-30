@@ -16,9 +16,11 @@
     name: Europe/Paris
   tags: timezone
 
-- name: Install & Update locale to FR
-  include: locale.yml
-  tags: locale
+# What is the use of this ? locale in console ?
+# is it really working ?
+#- name: Install & Update locale to FR
+#  include: locale.yml
+#  tags: locale
 
 - name: Install & Configure Uncomplicated Firewall (ufw)
   include: ufw.yml

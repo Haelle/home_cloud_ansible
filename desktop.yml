@@ -5,16 +5,12 @@
     - ./secrets.yml
 
   pre_tasks:
-    - name: Add Ansible Apt repository
-      apt_repository:
-        repo: ppa:ansible/ansible
+    - name: Passwordless users
+      lineinfile:
+        path: /etc/sudoers
+        regexp: '\%sudo.+ALL=\(ALL:ALL\).+ALL'
+        line: "%sudo ALL=(ALL:ALL) NOPASSWD: ALL"
         state: present
-
-    - name: Upgrade Ansible
-      apt:
-        name: ansible
-        state: latest
-        update_cache: 'yes'
 
   roles:
     - role: basic_setup
