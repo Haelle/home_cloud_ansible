@@ -1,6 +1,7 @@
 ---
 default_user: ubuntu
 hostname: lutece
+static_ip: 192.168.1.2
 # $ arch => aarch64
 docker_apt_arch: arm64
 server_user:

@@ -38,4 +38,3 @@
     src: rate_limiting.conf
     dest: /etc/nginx/conf.d/rate_limiting.conf
   notify: restart nginx
-  tags: oki

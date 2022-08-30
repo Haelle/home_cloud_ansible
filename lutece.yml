@@ -66,12 +66,15 @@
           - "download.alxs.fr"
         - domains:
           - "photo.alxs.fr"
+        - domains:
+          - "cloud.alxs.fr"
       tags:
         - certbot
         - pi-hole
         - plex
         - transmission
         - photoprism
+        - reverse_proxy
 
     - role: pi_hole
       docker_user: "{{ server_user.name }}"
@@ -115,3 +118,7 @@
       librephotos_mapbox_api_key: "{{ mapbox_api_key }}"
       librephotos_db_password: "{{ librephotos_db_password_secret }}"
       tags: librephotos
+
+    - role: lutece_reverse_proxy
+      rothomagus_static_ip: "{{ hostvars['raspberry-rothomagus']['static_ip'] }}"
+      tags: reverse_proxy
