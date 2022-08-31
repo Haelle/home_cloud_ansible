@@ -21,14 +21,14 @@
       user: "{{ server_user }}"
       tags: basic
 
-    - role: haelle.vimrc
-      become_user: "{{ server_user.name }}"
-      tags: vim
-
     - role: haelle.oh_my_zsh
       users:
         - "{{ server_user.name }}"
       tags: zsh
+
+    - role: haelle.vimrc
+      vim_user: "{{ server_user.name }}"
+      tags: vim
 
     - role: desktop
       tags: desktop

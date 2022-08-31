@@ -45,29 +45,29 @@
           disk_label: Lutece_1
 
     - role: nextcloud_client
-      nextcloud_user: '{{ server_user.name }}'
-      nextcloud_group: '{{ server_user.group }}'
-      nextcloud_folder: '{{ disk_mount_point }}/Nextcloud'
-      nextcloud_excluded_directories_path: '{{ disk_mount_point }}/.nextcloud_excluded_directories'
+      nextcloud_user: "{{ server_user.name }}"
+      nextcloud_group: "{{ server_user.group }}"
+      nextcloud_folder: "{{ disk_mount_point }}/Nextcloud"
+      nextcloud_excluded_directories_path: "{{ disk_mount_point }}/.nextcloud_excluded_directories"
       nextcloud_excluded_directories: []
       tags: nextcloud
 
     - role: haelle.certbot
       certbot_install_method: snap
-      certbot_create_if_missing: 'yes'
+      certbot_create_if_missing: "yes"
       certbot_create_method: standalone
       certbot_admin_email: "{{ certbot_email }}"
       certbot_certs:
         - domains:
-          - "trou-noir.alxs.fr"
+            - "trou-noir.alxs.fr"
         - domains:
-          - "plex.alxs.fr"
+            - "plex.alxs.fr"
         - domains:
-          - "download.alxs.fr"
+            - "download.alxs.fr"
         - domains:
-          - "photo.alxs.fr"
+            - "photo.alxs.fr"
         - domains:
-          - "cloud.alxs.fr"
+            - "cloud.alxs.fr"
       tags:
         - certbot
         - pi-hole
@@ -89,23 +89,23 @@
       tags: plex
 
     - role: transmission
-      docker_user: '{{ server_user.name }}'
-      transmission_data: '{{ disk_mount_point }}/medias'
-      transmission_directory: '{{ disk_mount_point }}/medias/transmission-home'
-      transmission_rpc_login: '{{ transmission_login }}'
-      transmission_rpc_password: '{{ transmission_password}}'
+      docker_user: "{{ server_user.name }}"
+      transmission_data: "{{ disk_mount_point }}/medias"
+      transmission_directory: "{{ disk_mount_point }}/medias/transmission-home"
+      transmission_rpc_login: "{{ transmission_login }}"
+      transmission_rpc_password: "{{ transmission_password}}"
       tags: transmission
 
     #- role: photoprism
-      #docker_user: '{{ server_user.name }}'
-      #photoprism_directory: "{{ disk_mount_point }}/photoprism"
-      #photoprism_data: "{{ disk_mount_point }}/Nextcloud/Photos"
-      #photoprism_admin_password: "{{ photoprism_password }}"
-      #photoprism_mariadb_password: "{{ photoprism_db_password }}"
-      #tags: photoprism
+    #docker_user: '{{ server_user.name }}'
+    #photoprism_directory: "{{ disk_mount_point }}/photoprism"
+    #photoprism_data: "{{ disk_mount_point }}/Nextcloud/Photos"
+    #photoprism_admin_password: "{{ photoprism_password }}"
+    #photoprism_mariadb_password: "{{ photoprism_db_password }}"
+    #tags: photoprism
 
     - role: librephotos
-      docker_user: '{{ server_user.name }}'
+      docker_user: "{{ server_user.name }}"
       librephotos_directory: "{{ disk_mount_point }}/librephotos"
       librephotos_data: "{{ disk_mount_point }}/Nextcloud/Photos"
       librephotos_media: "{{ librephotos_directory }}/media"

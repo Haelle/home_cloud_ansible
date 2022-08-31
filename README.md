@@ -75,6 +75,19 @@ If in the log there is only ONE `SSH: EXEC ssh....` it's working if not there wi
 ansible raspberry -vvv -u pi -m shell -a 'echo ok'
 ```
 
-## TODO
+## Firefox & KeepassXC
 
-backup ?
+Actuellement KeepassXC n'arrive pas à communiquer avec Firefox natif (version snap).
+
+Il faut donc :
+- désinstaller firefox de snap `sudo snap remove firefox`
+- ajouter le ppa de firefox  `sudo add-apt-repository ppa:mozillateam/ppa`
+- rendre ce ppa prioritaire par rapport à snap
+- installer firefox
+
+```config
+# /etc/apt/preferences.d/mozilla-firefox
+Package: *
+Pin: release o=LP-PPA-mozillateam
+Pin-Priority: 1001
+```

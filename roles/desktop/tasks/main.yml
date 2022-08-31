@@ -2,20 +2,37 @@
 - name: Install desktop packages
   apt:
     pkg:
+      - chromium-browser
+      - cloc
       - cowsay
       - curl
       - docker
+      - docker-compose
       - direnv
       - finger
+      - gnome-tweaks
       - htop
       - magic-wormhole
       - mmv
       - mosh
       - snapd
+      - steam
       - telnet
       - tree
       - whois
     state: latest
+
+- name: Ensure ~/.ssh exists
+  file:
+    path: ~/.ssh
+    state: directory
+  become_user: "{{ server_user.name }}"
+
+- name: Ensure ~/.ssh/config exists
+  file:
+    path: ~/.ssh/config
+    state: touch
+  become_user: "{{ server_user.name }}"
 
 - name: SSH default config
   blockinfile:
@@ -40,12 +57,18 @@
     - keepass
     - keepass-xc
 
+- name: Add Unity apt key
+  apt_key:
+    url: https://hub.unity3d.com/linux/keys/public
+    state: present
+
+# Currently for Ubuntu 22.04 it needs this package to be installed
+# http://security.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb
 - name: Add UnityHub official repository
   apt_repository:
     repo: deb https://hub.unity3d.com/linux/repos/deb stable main
     state: present
     update_cache: "yes"
-  tags: unity
 
 - name: Add Nemo Seahorse repository
   apt_repository:
@@ -53,70 +76,47 @@
     state: present
     update_cache: "yes"
 
-- name: install desktop packages
+- name: Install desktop packages
   apt:
-    name: "{{ item }}"
+    pkg:
+      - calibre
+      - chrome-gnome-shell
+      - dotnet6
+      - exfat-fuse
+      - gimp
+      - ghostwriter
+      - gnome-shell-pomodoro
+      - gnome-tweaks
+      - keepassxc
+      - meld
+      - nautilus-nextcloud
+      - nemo
+      - nemo-nextcloud
+      - nemo-seahorse
+      - seahorse-nautilus
+      - steam
+      - unityhub
+      - variety
+      - vlc
+      - xournal
     state: latest
     update_cache: yes
-  with_items:
-    - keepassxc
-    - calibre
-    - vlc
-    - steam
-    - gimp
-    - gnome-tweak-tool
-    - exfat-fuse
-    - exfat-utils
-    - meld
-    - variety
-    - gnome-shell-pomodoro
-    - xournal
-    - chrome-gnome-shell
-    - ghostwriter
-    - nautilus-nextcloud
-    - seahorse-nautilus
-    - nemo
-    - nemo-nextcloud
-    - nemo-seahorse
-    - unityhub
 
-- name: PyCharm
+- name: Snap packages
   snap:
-    name: pycharm-community
+    name:
+      - pycharm-community
+      - slack
+      - skype
+      - insomnia
+      - gitkraken
+      - hey-mail
     classic: "yes"
   tags: pycharm
 
-- name: Rider
+- name: Rider with specific version
   snap:
     name: rider
     classic: "yes"
     channel: "2019.2/stable"
   tags: rider
-
-- name: Slack
-  snap:
-    name: slack
-    classic: "yes"
-  tags: slack
-
-- name: Skype
-  snap:
-    name: skype
-    classic: "yes"
-  tags: skype
-
-- name: Insomnia
-  snap:
-    name: insomnia
-    classic: "yes"
-  tags: insomnia
-
-- name: GitKraken
-  snap:
-    name: gitkraken
-    classic: "yes"
-  tags: gitkraken
-
-- name: VLC
-  command: sudo snap install vlc --classic
-  tags: vlc

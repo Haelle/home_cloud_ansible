@@ -9,3 +9,4 @@
     src: agignore
     dest: /home/{{ server_user.name}}/.agignore
     mode: '0644'
+  become_user: "{{ server_user.name }}"
