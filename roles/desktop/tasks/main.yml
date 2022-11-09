@@ -15,6 +15,7 @@
       - magic-wormhole
       - mmv
       - mosh
+      - peek
       - snapd
       - steam
       - telnet
