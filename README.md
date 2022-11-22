@@ -91,3 +91,7 @@ Package: *
 Pin: release o=LP-PPA-mozillateam
 Pin-Priority: 1001
 ```
+
+## CopyQ & KeePassXC
+
+CopyQ stock l'historique des c/p ; afin d'éviter qu'il stocke les mots de passe de KeePassXC il faut activer [une commande](https://github.com/hluk/copyq-commands/blob/master/Automatic/keepassxc-protector.ini)

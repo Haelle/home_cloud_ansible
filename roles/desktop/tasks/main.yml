@@ -5,6 +5,7 @@
       - chromium-browser
       - cloc
       - cowsay
+      - copyq
       - curl
       - docker
       - docker-compose
