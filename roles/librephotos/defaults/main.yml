@@ -1,6 +1,0 @@
----
-librephotos_log_directory: /var/log/librephotos
-librephotos_port: 3333
-librephotos_db_user: librephotos
-librephotos_scan_command: "docker exec --user root librephotos pyhton3 manage.py scan >> {{ librephotos_log_directory }}/scan.log 2>&1"
-

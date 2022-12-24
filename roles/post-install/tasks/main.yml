@@ -7,10 +7,6 @@
   include: ufw.yml
   tags: ufw
 
-- name: Nextcloud
-  include: nextcloud.yml
-  tags: nextcloud
-
 - name: Disallow password login
   include: disallow_ssh.yml
   tags: ssh
