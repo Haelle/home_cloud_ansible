@@ -49,7 +49,16 @@
       nextcloud_group: "{{ server_user.group }}"
       nextcloud_folder: "{{ disk_mount_point }}/Nextcloud"
       nextcloud_excluded_directories_path: "{{ disk_mount_point }}/.nextcloud_excluded_directories"
-      nextcloud_excluded_directories: []
+      nextcloud_excluded_directories:
+        - Autres
+        - Documents
+        - "Dossier appartement"
+        - Images
+        - Frameo
+        - Livres_numériques
+        - "Photos à traiter"
+        - Programmation
+        - "Remote Expertise Technology"
       tags: nextcloud
 
     - role: haelle.certbot
@@ -96,29 +105,10 @@
       transmission_rpc_password: "{{ transmission_password}}"
       tags: transmission
 
-    #- role: photoprism
-    #docker_user: '{{ server_user.name }}'
-    #photoprism_directory: "{{ disk_mount_point }}/photoprism"
-    #photoprism_data: "{{ disk_mount_point }}/Nextcloud/Photos"
-    #photoprism_admin_password: "{{ photoprism_password }}"
-    #photoprism_mariadb_password: "{{ photoprism_db_password }}"
-    #tags: photoprism
-
-    - role: librephotos
-      docker_user: "{{ server_user.name }}"
-      librephotos_directory: "{{ disk_mount_point }}/librephotos"
-      librephotos_data: "{{ disk_mount_point }}/Nextcloud/Photos"
-      librephotos_media: "{{ librephotos_directory }}/media"
-      librephotos_cache: "{{ librephotos_directory }}/cache"
-      librephotos_database: "{{ librephotos_directory }}/database"
-      librephotos_admin_login: "{{ librephotos_admin_login_secret }}"
-      librephotos_admin_password: "{{ librephotos_admin_password_secret }}"
-      librephotos_admin_email: "{{ certbot_email }}"
-      librephotos_secret_key: "{{ librephotos_secret_key_secret }}"
-      librephotos_mapbox_api_key: "{{ mapbox_api_key }}"
-      librephotos_db_password: "{{ librephotos_db_password_secret }}"
-      tags: librephotos
-
-    - role: lutece_reverse_proxy
-      rothomagus_static_ip: "{{ hostvars['raspberry-rothomagus']['static_ip'] }}"
-      tags: reverse_proxy
+    - role: photoprism
+      docker_user: '{{ server_user.name }}'
+      photoprism_directory: "{{ disk_mount_point }}/photoprism"
+      photoprism_data: "{{ disk_mount_point }}/Nextcloud/Photos"
+      photoprism_admin_password: "{{ photoprism_password }}"
+      photoprism_mariadb_password: "{{ photoprism_db_password }}"
+      tags: photoprism
