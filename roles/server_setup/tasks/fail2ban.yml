@@ -15,3 +15,12 @@
     src: filter.d/nginx-http-dos.conf
     dest: /etc/fail2ban/filter.d/nginx-http-dos.conf
   notify: restart fail2ban
+
+- name: Ignore local IP
+  lineinfile:
+    path: /etc/fail2ban/jail.conf
+    regex: 'ignoreip = '
+    line: 'ignoreip = 127.0.0.1/8 ::1 192.168.1.0/24'
+    state: present
+  notify: restart fail2ban
+  tags: oki

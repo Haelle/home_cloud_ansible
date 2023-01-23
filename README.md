@@ -95,3 +95,7 @@ Pin-Priority: 1001
 ## CopyQ & KeePassXC
 
 CopyQ stock l'historique des c/p ; afin d'éviter qu'il stocke les mots de passe de KeePassXC il faut activer [une commande](https://github.com/hluk/copyq-commands/blob/master/Automatic/keepassxc-protector.ini)
+
+## Fusuma
+
+Check `roles/desktop/tasks/fusuma.yml` in order to make it work on startup

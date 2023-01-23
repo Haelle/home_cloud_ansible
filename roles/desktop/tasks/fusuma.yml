@@ -1,0 +1,29 @@
+---
+# You need to manually add Fusuma on startup
+# which fusuma gives the location
+# add the location with -d option
+- name: Install Fusuma gem
+  community.general.gem:
+    name: fusuma
+    state: present
+
+- name: Ensure the touchpad events are being sent to the GNOME desktop
+  cmd: gsettings set org.gnome.desktop.peripherals.touchpad send-events enabled
+
+- name: Create config file
+  copy:
+    src: fusuma.yml
+    dest: /home/{{ server_user.name }}/.config/fusuma/config.yml
+  become_user: "{{ server_user.name}}"
+
+- name: Add user to input group
+  user:
+    name: "{{ server_user.name}}"
+    group: input
+
+- name: Install dependencies
+  apt:
+    pkg:
+      - libinput-tools
+      - xdotools
+    state: latest

@@ -90,6 +90,8 @@
       - gnome-shell-pomodoro
       - gnome-tweaks
       - keepassxc
+      - libssl-dev
+      - libyaml-dev
       - meld
       - nautilus-nextcloud
       - nemo
@@ -122,3 +124,6 @@
     classic: "yes"
     channel: "2019.2/stable"
   tags: rider
+
+- name: Install Fusuma gestures
+  include: fusuma.yml
