@@ -12,11 +12,13 @@
       - direnv
       - finger
       - gnome-tweaks
+      - libpq-dev
       - htop
       - magic-wormhole
       - mmv
       - mosh
       - peek
+      - postgresql
       - snapd
       - steam
       - telnet
