@@ -2,29 +2,50 @@
 - name: Install desktop packages
   apt:
     pkg:
+      - calibre
+      - chrome-gnome-shell
       - chromium-browser
       - cloc
-      - cowsay
       - copyq
+      - cowsay
       - curl
+      - direnv
       - docker
       - docker-compose
-      - direnv
+      - dotnet6
+      - exfat-fuse
       - finger
+      - ghostwriter
+      - gimp
+      - gnome-shell-pomodoro
       - gnome-tweaks
-      - libpq-dev
       - htop
+      - keepassxc
+      - libpq-dev
+      - libssl-dev
+      - libyaml-dev
       - magic-wormhole
+      - meld
       - mmv
       - mosh
+      - nautilus-nextcloud
+      - nemo
+      - nemo-nextcloud
+      - nemo-seahorse
       - peek
       - postgresql
+      - seahorse-nautilus
       - snapd
       - steam
       - telnet
       - tree
+      - unityhub
+      - variety
+      - vlc
       - whois
+      - xournal
     state: latest
+    update_cache: yes
 
 - name: Ensure ~/.ssh exists
   file:
@@ -79,34 +100,6 @@
     repo: ppa:wasta-linux/cinnamon-testing
     state: present
     update_cache: "yes"
-
-- name: Install desktop packages
-  apt:
-    pkg:
-      - calibre
-      - chrome-gnome-shell
-      - dotnet6
-      - exfat-fuse
-      - gimp
-      - ghostwriter
-      - gnome-shell-pomodoro
-      - gnome-tweaks
-      - keepassxc
-      - libssl-dev
-      - libyaml-dev
-      - meld
-      - nautilus-nextcloud
-      - nemo
-      - nemo-nextcloud
-      - nemo-seahorse
-      - seahorse-nautilus
-      - steam
-      - unityhub
-      - variety
-      - vlc
-      - xournal
-    state: latest
-    update_cache: yes
 
 - name: Snap packages
   snap:
