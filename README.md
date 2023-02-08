@@ -99,3 +99,20 @@ CopyQ stock l'historique des c/p ; afin d'éviter qu'il stocke les mots de passe
 ## Fusuma
 
 Check `roles/desktop/tasks/fusuma.yml` in order to make it work on startup
+
+## Elodie
+
+[Elodie repo](https://github.com/jmathai/elodie)
+
+Put this in `~/.elodie/config.ini`
+
+```.ini
+[MapQuest]
+key=8XwE7GPafsulqINcoWFbE4PcdFGZuuns
+prefer_english_names=False
+
+[Directory]
+location=%town %city, %state
+date=%Y-%m-%B
+full_path=%date/%album|%location
+```
