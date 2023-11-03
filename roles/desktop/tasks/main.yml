@@ -36,6 +36,7 @@
       - postgresql
       - seahorse-nautilus
       - snapd
+      - solaar-gnome3
       - steam
       - telnet
       - tree
