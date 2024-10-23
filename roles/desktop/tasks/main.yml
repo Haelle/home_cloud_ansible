@@ -15,12 +15,14 @@
       - dotnet6
       - exfat-fuse
       - finger
+      - fuse
       - ghostwriter
       - gimp
       - gnome-shell-pomodoro
       - gnome-tweaks
       - htop
       - keepassxc
+      - libfuse2t64
       - libpq-dev
       - libssl-dev
       - libyaml-dev
