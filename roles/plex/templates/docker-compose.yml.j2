@@ -4,13 +4,10 @@ version: "2"
 services:
   plex:
     container_name: plex
-    build:
-      context: {{ plex_git }}
-      dockerfile: {{ plex_git }}/Dockerfile.arm64
+    image: plexinc/pms-docker
     restart: unless-stopped
     ports:
       - 32400:32400/tcp
-      - 3005:3005/tcp
       - 8324:8324/tcp
       - 32469:32469/tcp
       - 1900:1900/udp
@@ -23,6 +20,7 @@ services:
       - ADVERTISE_IP=http://192.168.1.2:32400/
       - PLEX_UID={{ plex_uid }}
       - PLEX_GID={{ plex_gid }}
+      # - PLEX_CLAIM=XXXX # should not be mandatory but fails wihtout it...
     hostname: {{ hostname }}
     volumes:
       - {{ plex_database }}:/config
